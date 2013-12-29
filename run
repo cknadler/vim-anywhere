@@ -1,9 +1,7 @@
 #!/bin/bash
 #
 # vim-anywhere - use Vim whenever, wherever
-#
 # Author: Chris Knadler
-# Contact: takeshi91k@gmail.com
 # Homepage: https://www.github.com/cknadler/vim-anywhere
 
 dir=/private/tmp/vim-anywhere
@@ -14,4 +12,4 @@ mkdir -p $dir
 mvim --nofork $file
 # copy the result and refocus the previous application
 cat $file | pbcopy
-osascript $HOME/.vim-anywhere/tab-back.scpt
+osascript $HOME/.vim-anywhere/refocus.scpt

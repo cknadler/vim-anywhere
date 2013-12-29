@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# vim-anywhere - use Vim whenever, wherever
+# Author: Chris Knadler
+# Homepage: https://www.github.com/cknadler/vim-anywhere
 
 rm -rf $HOME/.vim-anywhere $HOME/Library/Services/VimAnywhere.workflow
 echo "vim-anywhere sucessfully uninstalled!"
