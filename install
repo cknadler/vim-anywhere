@@ -1,4 +1,34 @@
 #!/bin/bash
 
-mkdir -p $HOME/.vim-anywhere
-cp vim-anywhere tab-back.scpt $HOME/.vim-anywhere
+err() { echo "$@" 1>&2; }
+
+aw_path=$HOME/.vim-anywhere
+aw_url='https://github.com/cknadler/vim-anywhere'
+
+# Check if vim-anywhere is already installed. If so, bail.
+if [ -a $aw_path ]; then
+  err 'It looks like vim-anywhere is already installed.'
+  err 'Run `rm -r ~/.vim-anywhere` and then retry.'
+  exit 1
+fi
+
+# Ensure homebrew is installed. If not, bail.
+which brew &>/dev/null
+if [ $? -ne 0 ]; then
+  err 'vim-anywhere requires homebrew to function.'
+  err 'Visit http://brew.sh for details.'
+  exit 1
+fi
+
+# Ensure mvim is installed. If not, attempt to install it with homebrew.
+which mvim &>/dev/null
+if [$? -ne 0 ]; then
+  echo 'Installing MacVim via Homebrew...\n'
+  brew install macvim
+fi
+
+# clone the repo into the current user's home folder
+git clone $aw_url $aw_path
+
+# install the workflow in services
+cp -R $aw_path/Vim\ Anywhere.workflow $HOME/Library/Services
