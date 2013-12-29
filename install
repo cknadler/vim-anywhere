@@ -23,12 +23,12 @@ fi
 # Ensure mvim is installed. If not, attempt to install it with homebrew.
 which mvim &>/dev/null
 if [$? -ne 0 ]; then
-  echo 'Installing MacVim via Homebrew...\n'
+  echo 'Installing MacVim via Homebrew...'
   brew install macvim
 fi
 
+echo "Installing vim-anywhere..."
 # clone the repo into the current user's home folder
 git clone $aw_url $aw_path
-
-# install the workflow in services
-cp -R $aw_path/Vim\ Anywhere.workflow $HOME/Library/Services
+# install the workflow as a service
+cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services

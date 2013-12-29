@@ -8,7 +8,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Vim Anywhere</string>
+				<string>VimAnywhere</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>runWorkflowAsService</string>

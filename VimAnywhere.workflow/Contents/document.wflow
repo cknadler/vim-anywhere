@@ -59,7 +59,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>$HOME/.vim-anywhere/vim-anywhere start</string>
+					<string>$HOME/.vim-anywhere/run</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -84,7 +84,7 @@
 				<key>Class Name</key>
 				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>C5AC847E-BB44-4EA7-BBEA-4315013BBDF7</string>
+				<string>6FFA24CD-4E05-4C6A-A6FB-E32CF835C918</string>
 				<key>Keywords</key>
 				<array>
 					<string>Shell</string>
@@ -94,9 +94,9 @@
 					<string>Unix</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>956F1AAD-1155-47CA-8CCB-B8EB3CE31178</string>
+				<string>38133079-F4E2-4D5F-9B21-6BBAFABD7CE9</string>
 				<key>UUID</key>
-				<string>B4DAE14F-A43D-4531-B3F0-A3EF7CDBC7B2</string>
+				<string>B374B8A3-8D8E-4327-9A92-826742A01517</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>

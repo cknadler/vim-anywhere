@@ -1,3 +1,4 @@
 #!/bin/bash
 
-rm -rf $HOME/.vim-anywhere
+rm -rf $HOME/.vim-anywhere $HOME/Library/Services/VimAnywhere.workflow
+echo "vim-anywhere sucessfully uninstalled!"
