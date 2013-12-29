@@ -6,30 +6,16 @@
 # Contact: takeshi91k@gmail.com
 # Homepage: https://www.github.com/cknadler/vim-anywhere
 
-open_mvim() {
-  dir=/private/tmp/vim-anywhere
-  file=$dir/doc-$(date +"%Y%m%d%H%M")
-
-  mkdir -p $dir
-
-  /usr/local/bin/mvim -c "au VimLeave * !$HOME/.vim-anywhere/bin/vim-anywhere end $file" $file
-}
-
-script=<<END
-END
-
-# Run some applescript that tabs back to the previous window
-tab_back() {
-
-}
-
 case $1 in
 start )
-  open_mvim
+  dir=/private/tmp/vim-anywhere
+  file=$dir/doc-$(date +"%Y%m%d%H%M")
+  mkdir -p $dir
+  /usr/local/bin/mvim -c "au VimLeave * !$HOME/.vim-anywhere/vim-anywhere end $file" $file
   ;;
 end )
   cat $2 | pbcopy
-  tab_back
+  osascript $HOME/.vim-anywhere/tab-back.scpt
   ;;
 * ) exit 1 ;;
 esac
