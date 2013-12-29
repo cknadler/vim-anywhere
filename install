@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mkdir -p $HOME/.vim-anywhere
+cp ./bin/vim-anywhere $HOME/.vim-anywhere
