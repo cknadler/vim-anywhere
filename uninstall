@@ -3,6 +3,10 @@
 # vim-anywhere - use Vim whenever, wherever
 # Author: Chris Knadler
 # Homepage: https://www.github.com/cknadler/vim-anywhere
+#
+# Uninstalls vim-anywhere. Intended for use via curl:
+#
+#   $ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/uninstall | sh
 
 rm -rf $HOME/.vim-anywhere $HOME/Library/Services/VimAnywhere.workflow
-echo "vim-anywhere sucessfully uninstalled!"
+echo "vim-anywhere has been successfully uninstalled!"
