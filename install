@@ -16,10 +16,10 @@ aw_url='https://github.com/cknadler/vim-anywhere'
 # Check if vim-anywhere is already installed. If so, bail.
 if [ -a $aw_path ]; then
   err 'It looks like vim-anywhere is already installed.'
-  err 'Run `rm -r ~/.vim-anywhere` and then retry.'
+  err 'Cleaning up previous installation...'
+  rm -rf $aw_path
   # TODO: It would be nice to have an option for user input here
   # Reinstall vim-anywhere (y/n)? ... or something like that
-  exit 1
 fi
 
 # Ensure homebrew is installed. If not, bail.
@@ -32,14 +32,21 @@ fi
 
 # Ensure mvim is installed. If not, attempt to install it with homebrew.
 which mvim &>/dev/null
-if [$? -ne 0 ]; then
+if [ $? -ne 0 ]; then
   echo 'Installing MacVim via Homebrew...'
   brew install macvim
+  # bail if installation fails
+  [ $? -ne 0 ] && exit 1
 fi
 
 echo "Installing vim-anywhere..."
+
 # clone the repo into the current user's home folder
+unset $(git rev-parse --local-env-vars)
 git clone $aw_url $aw_path
+# if the git clone fails (usually due to auth) bail
+[ $? -ne 0 ] && exit 1
+
 # install the workflow as a service
 cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
 
