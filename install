@@ -15,8 +15,8 @@ aw_url='https://github.com/cknadler/vim-anywhere'
 
 # Check if vim-anywhere is already installed. If so, bail.
 if [ -a $aw_path ]; then
-  err 'It looks like vim-anywhere is already installed.'
-  err 'Cleaning up previous installation...'
+  echo 'It looks like vim-anywhere is already installed.'
+  echo 'Cleaning up previous installation...'
   rm -rf $aw_path
   # TODO: It would be nice to have an option for user input here
   # Reinstall vim-anywhere (y/n)? ... or something like that
