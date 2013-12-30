@@ -26,7 +26,7 @@ __Linux:__
 #### Install
 
 ```bash
-curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | sh
+curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | bash
 ```
 
 __OSX caveat:__ key binding is unbound by default. See [keybinding](#keybinding)
