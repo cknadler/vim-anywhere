@@ -21,21 +21,48 @@ if [ -a $aw_path ]; then
   # Reinstall vim-anywhere (y/n)? ... or something like that
 fi
 
-# Ensure homebrew is installed. If not, bail.
-which brew &>/dev/null
-if [ $? -ne 0 ]; then
-  err 'vim-anywhere requires homebrew to function.'
-  err 'Visit http://brew.sh for details.'
-  exit 1
-fi
+# If we are on Linux
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
 
-# Ensure mvim is installed. If not, attempt to install it with homebrew.
-which mvim &>/dev/null
-if [ $? -ne 0 ]; then
-  echo 'Installing MacVim via Homebrew...'
-  brew install macvim
-  # bail if installation fails
-  [ $? -ne 0 ] && exit 1
+  # Ensure gconftool is installed. If not, bail.
+  which gconftool &>/dev/null
+  if [ $? -ne 0 ]; then
+    err 'vim-anywhere requires gconftool to function.'
+    exit 1
+  fi
+
+  # Ensure gvim is installed. If not, bail.
+  which gvim &>/dev/null
+  if [ $? -ne 0 ]; then
+    err 'vim-anywhere requires gvim to function.'
+    exit 1
+  fi
+
+  # Ensure xclip is installed. If not, bail.
+  which xclip &>/dev/null
+  if [ $? -ne 0 ]; then
+    err 'vim-anywhere requires xclip to function.'
+    exit 1
+  fi
+
+# If we are on a Mac
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  # Ensure homebrew is installed. If not, bail.
+  which brew &>/dev/null
+  if [ $? -ne 0 ]; then
+    err 'vim-anywhere requires homebrew to function.'
+    err 'Visit http://brew.sh for details.'
+    exit 1
+  fi
+
+  # Ensure mvim is installed. If not, attempt to install it with homebrew.
+  which mvim &>/dev/null
+  if [ $? -ne 0 ]; then
+    echo 'Installing MacVim via Homebrew...'
+    brew install macvim
+    # bail if installation fails
+    [ $? -ne 0 ] && exit 1
+  fi
 fi
 
 echo "Installing vim-anywhere..."
@@ -46,17 +73,25 @@ git clone $aw_url $aw_path
 # if the git clone fails (usually due to auth) bail
 [ $? -ne 0 ] && exit 1
 
-# install the workflow as a service
-cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
+# If we are on Linux
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/name "vim-anywhere"
+  gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding "<CTRL><ALT>v"
+  gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/action "$aw_path/bin/run"
+# If we are on a Mac
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  # install the workflow as a service
+  cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
 
-# TODO: add shortcut
-# It would be great if there was a way to set the keyboard shortcut for
-# vim-anywhere programatically (without GUI scripting). If there ends up being a
-# way to do this, it would go here. For reference, I have a SO question open
-# about this: http://stackoverflow.com/questions/20829985
+  # TODO: add shortcut
+  # It would be great if there was a way to set the keyboard shortcut for
+  # vim-anywhere programatically (without GUI scripting). If there ends up being a
+  # way to do this, it would go here. For reference, I have a SO question open
+  # about this: http://stackoverflow.com/questions/20829985
 
-# As a partial workaround, run a script that opens the shortcut options
-echo "Opening System Preferences..."
-osascript $aw_path/script/open_shortcuts.scpt
+  # As a partial workaround, run a script that opens the shortcut options
+  echo "Opening System Preferences..."
+  osascript $aw_path/script/open_shortcuts.scpt
+fi
 
 echo "vim-anywhere has been successfully installed!"

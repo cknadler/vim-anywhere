@@ -4,17 +4,23 @@
 # Author: Chris Knadler
 # Homepage: https://www.github.com/cknadler/vim-anywhere
 #
-# Updates vim-anywhere. Intended for use via curl:
-#
-#   $ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/update | sh
+# Updates vim-anywhere
 
 aw_path=$HOME/.vim-anywhere
+
+if [ ! -d $aw_path ]; then
+  echo "vim-anywhere doesn't seem to be installed."
+  exit 1
+fi
 
 unset $(git rev-parse --local-env-vars)
 pushd $aw_path
   git pull origin master
 popd
 
-cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
+# If we are on a Mac
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
+fi
 
 echo "vim-anywhere has been successfully updated!"

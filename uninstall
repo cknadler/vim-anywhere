@@ -4,9 +4,22 @@
 # Author: Chris Knadler
 # Homepage: https://www.github.com/cknadler/vim-anywhere
 #
-# Uninstalls vim-anywhere. Intended for use via curl:
-#
-#   $ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/uninstall | sh
+# Uninstalls vim-anywhere.
 
-rm -rf $HOME/.vim-anywhere $HOME/Library/Services/VimAnywhere.workflow
+# If we are on Linux
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  rm -rf $HOME/.vim-anywhere \
+         /tmp/vim-anywhere
+
+  gconftool --unset /desktop/gnome/keybindings/vim-anywhere/name
+  gconftool --unset /desktop/gnome/keybindings/vim-anywhere/binding
+  gconftool --unset /desktop/gnome/keybindings/vim-anywhere/action
+
+# If we are on a Mac
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  rm -rf $HOME/.vim-anywhere \
+         $HOME/Library/Services/VimAnywhere.workflow \
+         /private/tmp/vim-anywhere
+fi
+
 echo "vim-anywhere has been successfully uninstalled!"
