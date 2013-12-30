@@ -3,6 +3,8 @@
 Sometimes...you edit text outside of Vim. These are sad times. Enter
 vim-anywhere!
 
+![demo](demo.gif)
+
 vim-anywhere allows you to map a key to quickly open a MacVim buffer. Close it
 and it's contents are copied to your clipboard and your previous application is
 refocused.
