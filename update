@@ -16,8 +16,12 @@ fi
 unset $(git rev-parse --local-env-vars)
 pushd $aw_path
   git pull origin master
+  [ $? -ne 0 ] && exit 1
 popd
 
-cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
+# If we are on OSX
+if [[ $OSTYPE == "darwin"* ]]; then
+  cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
+fi
 
 echo "vim-anywhere has been successfully updated!"

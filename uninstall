@@ -4,10 +4,25 @@
 # Author: Chris Knadler
 # Homepage: https://www.github.com/cknadler/vim-anywhere
 #
-# Uninstalls vim-anywhere.
+# Uninstalls vim-anywhere
 
-rm -rf $HOME/.vim-anywhere \
-       $HOME/Library/Services/VimAnywhere.workflow \
-       /private/tmp/vim-anywhere
+aw_path=$HOME/.vim-anywhere
+
+# If we are on Linux
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  rm -rf $aw_path \
+         /tmp/vim-anywhere
+
+  kbd=/desktop/gnome/keybindings/vim-anywhere
+  gconftool --unset $kbd/name
+  gconftool --unset $kbd/binding
+  gconftool --unset $kbd/action
+
+# If we are on OSX
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  rm -rf $aw_path \
+         $HOME/Library/Services/VimAnywhere.workflow \
+         /private/tmp/vim-anywhere
+fi
 
 echo "vim-anywhere has been successfully uninstalled!"
