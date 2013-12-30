@@ -64,7 +64,7 @@
         <key>ActionParameters</key>
         <dict>
           <key>COMMAND_STRING</key>
-          <string>$HOME/.vim-anywhere/run</string>
+          <string>$HOME/.vim-anywhere/bin/run</string>
           <key>CheckedForUserDefaultShell</key>
           <true/>
           <key>inputMethod</key>

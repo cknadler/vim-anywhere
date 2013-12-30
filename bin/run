@@ -12,4 +12,4 @@ mkdir -p $dir
 /usr/local/bin/mvim --nofork $file
 # copy the result and refocus the previous application
 cat $file | pbcopy
-osascript $HOME/.vim-anywhere/refocus.scpt
+osascript $HOME/.vim-anywhere/script/refocus.scpt
