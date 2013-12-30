@@ -82,7 +82,7 @@ git clone $aw_url $aw_path
 
 # If we are on Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  kbd=/desktop/gnone/keybindings/vim-anywhere
+  kbd=/desktop/gnome/keybindings/vim-anywhere
   gconftool -t str --set $kbd/name "vim-anywhere"
   gconftool -t str --set $kbd/binding "<CTRL><ALT>v"
   gconftool -t str --set $kbd/action "$aw_path/bin/run"
