@@ -58,7 +58,7 @@ The installation script will automatically open
 __Linux:__ ( default = ctrl+alt+v )
 
 ```bash
-$ gconftool -t str --set /desktop/gnone/keybindings/vim-anywhere/binding <custom binding>
+$ gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding <custom binding>
 ```
 
 ## Previous Files
