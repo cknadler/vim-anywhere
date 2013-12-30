@@ -4,24 +4,19 @@
 # Author: Chris Knadler
 # Homepage: https://www.github.com/cknadler/vim-anywhere
 
+dir=/tmp/vim-anywhere
+file=$dir/doc-$(date +"%y%m%d%H%M%S")
+mkdir -p $dir
+
 # If we are on Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  dir=/tmp/vim-anywhere
-  file=$dir/doc-$(date +"%y%m%d%H%M%S")
-  mkdir -p $dir
-
   # Make file only readable by you
   chmod o-r $file
   gvim --nofork $file
   cat $file | xclip -selection clipboard
 
-# If we are on a Mac
+# If we are on OSX
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  dir=/private/tmp/vim-anywhere
-  file=$dir/doc-$(date +"%y%m%d%H%M%S")
-  mkdir -p $dir
-
-  # start MacVim but don't fork (this will block until you finish editing)
   /usr/local/bin/mvim --nofork $file
   # copy the result and refocus the previous application
   cat $file | pbcopy
