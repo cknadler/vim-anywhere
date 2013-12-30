@@ -19,6 +19,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   /usr/local/bin/mvim --nofork $file
   # copy the result and refocus the previous application
-  cat $file | pbcopy
+  pbcopy < $file
   osascript $HOME/.vim-anywhere/script/refocus.scpt
 fi
