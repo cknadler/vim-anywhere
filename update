@@ -8,5 +8,13 @@
 #
 #   $ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/update | sh
 
-git pull origin master $HOME/.vim-anywhere
+aw_path=$HOME/.vim-anywhere
+
+unset $(git rev-parse --local-env-vars)
+pushd $aw_path
+  git pull origin master
+popd
+
+cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
+
 echo "vim-anywhere has been successfully updated!"
