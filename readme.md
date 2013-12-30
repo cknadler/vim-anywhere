@@ -89,8 +89,9 @@ Vim to do more than just edit code.
 ## Roadmap
 
 - &#x2610; Find a way to automate setting vim-anywhere's keyboard shortcut (OSX)
-- &#x2612; Add gVim (and Linux) support
+- &#x2612; Gnome support
 - &#x2610; Speed up opening MacVim (disable animations?)
+- &#x2610; KDE support
 
 ## Contributing
 
