@@ -25,13 +25,13 @@ a shortcut for `VimAnywhere` under `Services` and you are good to go.
 __Update:__
 
 ```bash
-curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/update | sh
+~/.vim-anywhere/update
 ```
 
 __Uninstall:__
 
 ```bash
-curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/uninstall | sh
+~/.vim-anywhere/uninstall
 ```
 
 ## Requirements
