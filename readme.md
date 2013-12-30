@@ -42,9 +42,9 @@ the fly.
 
 ## Roadmap
 
-[ ] Find a way to automate setting the keyboard shortcut
-[ ] Add GVim (Linux) support
-[ ] Speed up opening MacVim (disable animations?)
+- &#x2610; Find a way to automate setting vim-anywhere's keyboard shortcut
+- &#x2610; Add GVim (and Linux) support
+- &#x2610; Speed up opening MacVim (disable animations?)
 
 ## License
 
