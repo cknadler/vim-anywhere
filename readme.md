@@ -36,11 +36,10 @@ __Uninstall:__
 
 ## Requirements
 
-vim-anywhere requires [homebrew](http://brew.sh/) and the homebrew installation
-of MacVim. The installer will attempt to install MacVim if you haven't already.
+__OSX:__
 
-Right now, vim-anywhere is only for OSX. I'd love to support GVim and Linux in
-the future.
+- [Homebrew](http://brew.sh/)
+- MacVim : `brew install macvim`
 
 ## Why?
 

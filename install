@@ -13,6 +13,10 @@ err() { echo "$@" 1>&2; }
 aw_path=$HOME/.vim-anywhere
 aw_url='https://github.com/cknadler/vim-anywhere'
 
+###
+# pre-installation checks
+###
+
 # Check if vim-anywhere is already installed. If so, bail.
 if [ -a $aw_path ]; then
   echo 'Cleaning up previous installation...'
@@ -29,14 +33,17 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Ensure mvim is installed. If not, attempt to install it with homebrew.
+# Ensure MacVim is installed. If not, bail.
 which mvim &>/dev/null
 if [ $? -ne 0 ]; then
-  echo 'Installing MacVim via Homebrew...'
-  brew install macvim
-  # bail if installation fails
-  [ $? -ne 0 ] && exit 1
+  err 'vim-anywhere requires MacVim to function.'
+  err 'Run `brew install macvim`.'
+  exit 1
 fi
+
+###
+# installation
+###
 
 echo "Installing vim-anywhere..."
 
@@ -52,8 +59,7 @@ cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
 # TODO: add shortcut
 # It would be great if there was a way to set the keyboard shortcut for
 # vim-anywhere programatically (without GUI scripting). If there ends up being a
-# way to do this, it would go here. For reference, I have a SO question open
-# about this: http://stackoverflow.com/questions/20829985
+# way to do this, it would go here.
 
 # As a partial workaround, run a script that opens the shortcut options
 echo "Opening System Preferences..."
