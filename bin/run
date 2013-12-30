@@ -23,12 +23,16 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
   # copy text of current application
   osascript -e 'tell application "System Events" to tell (name of application processes whose frontmost is true) to keystroke "ac" using {command down}'
+  # store current application
+  focused=$(osascript -e 'tell application "System Events" to copy (name of application processes whose frontmost is true) to stdout')
   # add copied text to our file
   pbpaste >> $file
   # start MacVim but don't fork (this will block until you finish editing)
   /usr/local/bin/mvim --nofork $file
   # copy the result and refocus the previous application
   pbcopy < $file
+  # refocus original app
+  osascript -e "tell application $focused to activate"
   # copy back to the previous application
   osascript -e 'tell application "System Events" to tell (name of application processes whose frontmost is true) to keystroke "v" using {command down}'
 fi
