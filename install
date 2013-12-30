@@ -55,4 +55,7 @@ cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
 # way to do this, it would go here. For reference, I have a SO question open
 # about this: http://stackoverflow.com/questions/20829985
 
+# As a partial workaround, run a script that opens the shortcut options
+osascript $aw_path/script/open_shortcuts.scpt
+
 echo "vim-anywhere has been successfully installed!"
