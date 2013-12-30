@@ -1,15 +1,13 @@
 # vim-anywhere
 
-Sometimes, you edit text outside of Vim. These are sad times. It should be
-easier to use Vim for more than just code...and now it is!
+Sometimes, you edit text outside of Vim. These are sad times. Enter
+vim-anywhere!
 
 ![demo](assets/demo.gif)
 
 Once [invoked](#keybinding), vim-anywhere will open a buffer. Close it and it's
 contents are copied to your clipboard and your previous application is
 refocused.
-
-vim-anywhere currently supports OSX and any Linux distro running Gnome.
 
 ## Installation
 
