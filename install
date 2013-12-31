@@ -83,7 +83,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
   # As a partial workaround, run a script that opens the shortcut options
   echo "Opening System Preferences..."
-  osascript $aw_path/script/open_shortcuts.scpt
+  osascript $aw_path/script/open_shortcuts.scpt &>/dev/null
 fi
 
 echo "vim-anywhere has been successfully installed!"
