@@ -5,8 +5,7 @@
 # Homepage: https://www.github.com/cknadler/vim-anywhere
 #
 # Installs vim-anywhere. Intended for use via curl:
-#
-#   $ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | sh
+#   $ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | bash
 
 err() { echo "$@" 1>&2; }
 
@@ -24,6 +23,13 @@ if [ -a $aw_path ]; then
   rm -rf $aw_path
   # TODO: It would be nice to have an option for user input here
   # Reinstall vim-anywhere (y/n)? ... or something like that
+fi
+
+# Check if Git is installed. If not, bail.
+which git &>/dev/null
+if [ $? -ne 0 ]; then
+  err 'vim-anywhere requires Git to function.'
+  exit 1
 fi
 
 # If we are on Linux
@@ -74,8 +80,10 @@ fi
 
 echo "Installing vim-anywhere..."
 
+# unset any local git env variables
+unset $(git rev-parse --local-env-vars) &>/dev/null
+
 # clone the repo into the current user's home folder
-unset $(git rev-parse --local-env-vars)
 git clone $aw_url $aw_path
 # if the git clone fails (usually due to auth) bail
 [ $? -ne 0 ] && exit 1
