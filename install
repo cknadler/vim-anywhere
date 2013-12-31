@@ -5,9 +5,19 @@
 # Homepage: https://www.github.com/cknadler/vim-anywhere
 #
 # Installs vim-anywhere. Intended for use via curl:
+#
 #   $ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | bash
 
 err() { echo "$@" 1>&2; }
+
+check_install() {
+  which $1 &>/dev/null
+  if [ $? -ne 0 ]; then
+    err "vim-anywhere requires $1 to function"
+    if [[ "$2" != "" ]]; then echo $2; fi
+    exit 1
+  fi
+}
 
 aw_path=$HOME/.vim-anywhere
 aw_url='https://github.com/cknadler/vim-anywhere'
@@ -25,53 +35,19 @@ if [ -a $aw_path ]; then
   # Reinstall vim-anywhere (y/n)? ... or something like that
 fi
 
-# Check if Git is installed. If not, bail.
-which git &>/dev/null
-if [ $? -ne 0 ]; then
-  err 'vim-anywhere requires Git to function.'
-  exit 1
-fi
+check_install git
 
 # If we are on Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  # Ensure gconftool is installed. If not, bail.
-  which gconftool &>/dev/null
-  if [ $? -ne 0 ]; then
-    err 'vim-anywhere requires gconftool to function.'
-    exit 1
-  fi
-
-  # Ensure gvim is installed. If not, bail.
-  which gvim &>/dev/null
-  if [ $? -ne 0 ]; then
-    err 'vim-anywhere requires gVim to function.'
-    exit 1
-  fi
-
-  # Ensure xclip is installed. If not, bail.
-  which xclip &>/dev/null
-  if [ $? -ne 0 ]; then
-    err 'vim-anywhere requires xclip to function.'
-    exit 1
-  fi
+  check_install gconftool
+  check_install gvim
+  check_install xclip
 
 # If we are on OSX
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  # Ensure homebrew is installed. If not, bail.
-  which brew &>/dev/null
-  if [ $? -ne 0 ]; then
-    err 'vim-anywhere requires Homebrew to function.'
-    err 'Visit http://brew.sh for details.'
-    exit 1
-  fi
+  check_install brew 'Visit http://brew.sh for details.'
+  check_install mvim 'Run `brew install macvim`.'
 
-  # Ensure MacVim is installed. If not, bail.
-  which mvim &>/dev/null
-  if [ $? -ne 0 ]; then
-    err 'vim-anywhere requires MacVim to function.'
-    err 'Run `brew install macvim`.'
-    exit 1
-  fi
 fi
 
 ###
