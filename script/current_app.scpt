@@ -2,8 +2,8 @@
 -- Author: Chris Knadler
 -- Homepage: https://www.github.com/cknadler/vim-anywhere
 --
--- Refocus the previous active application
+-- Get the current application's name
 
 tell application "System Events"
-  keystroke tab using {command down}
+  copy (name of application processes whose frontmost is true) to stdout
 end tell
