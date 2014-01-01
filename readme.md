@@ -1,4 +1,4 @@
-/home/z436037/# vim-anywhere
+# vim-anywhere
 
 Sometimes, you edit text outside of Vim. These are sad times. Enter
 vim-anywhere!
