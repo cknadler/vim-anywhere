@@ -60,7 +60,7 @@ __Linux:__ (GNOME)  ( default = ctrl+alt+v )
 ```bash
 $ gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding <custom binding>
 ```
-__Linux:__ (KDE4+)  ( default = ctrl+alt+v }
+__Linux:__ (KDE4+)  ( default = ctrl+alt+v )
 
 Make sure to install the keylaunch package (yum or apt-get)
 ``` 
