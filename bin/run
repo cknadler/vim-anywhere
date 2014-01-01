@@ -11,10 +11,21 @@ mkdir -p $dir
 # If we are on Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # Make file only readable by you
-  touch $file
-  chmod o-r $file
+
+  if [[ -n $KDE_SESSION_VERSION ]] # might want to try KDE_FULL_SESSION instead
+  then
+    qdbus org.kde.klipper /klipper getClipboardContents > $file # KDE version
+  else
+    xclip -o -selection clipboard > $file  # GNOME version
+  fi
+  chmod go-rw $file
   gvim --nofork $file
-  cat $file | xclip -selection clipboard
+  if [[ -n $KDE_SESSION_VERSION ]] # might want to try KDE_FULL_SESSION instead
+  then
+    qdbus org.kde.klipper /klipper setClipboardContents "`cat $file`" # KDE version
+  else
+    cat $file | xclip -selection clipboard  # GNOME version
+  fi
 
 # If we are on OSX
 elif [[ "$OSTYPE" == "darwin"* ]]; then
