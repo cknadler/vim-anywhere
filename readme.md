@@ -1,4 +1,4 @@
-# vim-anywhere
+/home/z436037/# vim-anywhere
 
 Sometimes, you edit text outside of Vim. These are sad times. Enter
 vim-anywhere!
@@ -55,11 +55,36 @@ The installation script will automatically open
 
 ![keyboard shortcut](assets/shortcut.png)
 
-__Linux:__ ( default = ctrl+alt+v )
+__Linux:__ (GNOME)  ( default = ctrl+alt+v )
 
 ```bash
 $ gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding <custom binding>
 ```
+__Linux:__ (KDE4+)  ( default = ctrl+alt+v }
+
+Make sure to install the keylaunch package (yum or apt-get)
+``` # apt-get install keylaunch
+``` 
+
+Create the following file:
+echo '#
+#
+# Format: key=...KeyName:Command
+#
+# ... No modifier
+# *.. Shift
+# .*. Ctrl
+# ..* Alt
+
+key=.**V:$HOME/.vim-anywhere/bin/run
+' > $HOME.keylaunchrc
+
+Run keylaunch in the background (or have it autostarted by KDE at login time)
+
+``` $ keylaunch &
+``` 
+  
+
 
 ## Previous Files
 
