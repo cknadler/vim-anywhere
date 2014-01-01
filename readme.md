@@ -85,7 +85,8 @@ key=.**V:$HOME/.vim-anywhere/bin/run
 
 Run keylaunch in the background (or have it autostarted by KDE at login time)
 
-``` $ keylaunch &
+``` 
+$ keylaunch &
 ``` 
   
 
