@@ -12,7 +12,12 @@ mkdir -p $dir
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # Make file only readable by you
 
-  touch $file
+  if [[ -n $KDE_SESSION_VERSION ]] # might want to try KDE_FULL_SESSION instead
+  then
+	qdbus org.kde.klipper /klipper getClipboardContents > $file # KDE version
+  else
+    xclip -o -selection clipboard > $file  # GNOME version
+  fi
   chmod o-r $file
   gvim --nofork $file
   if [[ -n $KDE_SESSION_VERSION ]] # might want to try KDE_FULL_SESSION instead
