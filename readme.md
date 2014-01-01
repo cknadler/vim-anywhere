@@ -63,10 +63,13 @@ $ gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding <custom
 __Linux:__ (KDE4+)  ( default = ctrl+alt+v }
 
 Make sure to install the keylaunch package (yum or apt-get)
-``` # apt-get install keylaunch
+``` 
+# apt-get install keylaunch
 ``` 
 
 Create the following file:
+
+```
 echo '#
 #
 # Format: key=...KeyName:Command
@@ -78,6 +81,7 @@ echo '#
 
 key=.**V:$HOME/.vim-anywhere/bin/run
 ' > $HOME.keylaunchrc
+```
 
 Run keylaunch in the background (or have it autostarted by KDE at login time)
 
