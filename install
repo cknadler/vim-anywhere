@@ -10,11 +10,31 @@
 
 err() { echo "$@" 1>&2; }
 
-check_install() {
+check_bin() {
   which $1 &>/dev/null
+  return $?
+}
+
+check_install() {
+  check_bin $1
   if [ $? -ne 0 ]; then
     err "vim-anywhere requires $1 to function"
     if [[ "$2" != "" ]]; then echo $2; fi
+    exit 1
+  fi
+}
+
+check_install_among() {
+  found=0
+  for bin in $*; do
+    check_bin $bin
+    if [ $? -eq 0 ]; then
+      found=1
+      break
+    fi
+  done
+  if [ "$found" -eq 0 ]; then
+    err "vim-anywhere requires one of those binaries: $*"
     exit 1
   fi
 }
@@ -39,7 +59,7 @@ check_install git
 
 # If we are on Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  check_install gconftool
+  check_install_among gconftool gsettings
   check_install gvim
   check_install xclip
 
