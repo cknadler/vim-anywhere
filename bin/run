@@ -18,7 +18,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   else
     xclip -o -selection clipboard > $file  # GNOME version
   fi
-  chmod o-r $file
+  chmod go-rw $file
   gvim --nofork $file
   if [[ -n $KDE_SESSION_VERSION ]] # might want to try KDE_FULL_SESSION instead
   then
