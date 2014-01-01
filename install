@@ -86,11 +86,24 @@ git clone $aw_url $aw_path
 
 # If we are on Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  kbd=/desktop/gnome/keybindings/vim-anywhere
-  gconftool -t str --set $kbd/name "vim-anywhere"
-  gconftool -t str --set $kbd/binding "<CTRL><ALT>v"
-  gconftool -t str --set $kbd/action "$aw_path/bin/run"
-
+  name="vim-anywhere"
+  binding="<CTRL><ALT>v"
+  action="$aw_path/bin/run"
+  check_bin gconftool
+  if [ $? -eq 0 ]; then
+    kbd=/desktop/gnome/keybindings/vim-anywhere
+    gconftool -t str --set $kbd/name $name
+    gconftool -t str --set $kbd/binding $binding
+    gconftool -t str --set $kbd/action $action
+  else
+    mky=org.gnome.settings-daemon.plugins.media-keys
+    ckb=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
+    kbd=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vim-anywhere/
+    gsettings set $mky custom-keybindings "['others', '$kbd']"
+    gsettings set $ckb:$kbd binding $binding
+    gsettings set $ckb:$kbd command $action
+    gsettings set $ckb:$kbd name $name
+  fi
 # If we are on OSX
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # install the workflow as a service
