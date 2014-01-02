@@ -70,7 +70,7 @@ fi
 
 # Linux specific checks
 if [[ $OSTYPE == "linux-gnu" ]]; then
-  require_installed gconftool
+  require_one_installed gconftool gsettings
   require_installed gvim
   require_installed xclip
 
@@ -95,10 +95,24 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
   name="vim-anywhere"
   binding="<CTRL><ALT>v"
   action=$aw_path/bin/run
-  kbd_path=/desktop/gnome/keybindings/vim-anywhere
-  gconftool -t str --set $kbd_path/name $name
-  gconftool -t str --set $kbd_path/binding $binding
-  gconftool -t str --set $kbd_path/action $action
+
+  # always try gsettings first
+  if check_installed gsettings; then
+    # TODO: can this be simplified?
+    media_keys=org.gnome.settings-daemon.plugins.media-keys
+    custom_kbd=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
+    kbd_path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vim-anywhere/
+    gsettings set $media_keys custom-keybindings "['others', '$kbd_path']"
+    gsettings set $custom_kbd:$kbd_path name $name
+    gsettings set $custom_kbd:$kbd_path binding $binding
+    gsettings set $custom_kbd:$kbd_path command $action
+
+  else # gconftool must be installed
+    kbd_path=/desktop/gnome/keybindings/vim-anywhere
+    gconftool -t str --set $kbd_path/name $name
+    gconftool -t str --set $kbd_path/binding $binding
+    gconftool -t str --set $kbd_path/action $action
+  fi
 
 # OSX install
 elif [[ $OSTYPE == "darwin"* ]]; then
