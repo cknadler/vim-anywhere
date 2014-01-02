@@ -86,9 +86,7 @@ fi
 
 echo "Installing vim-anywhere..."
 
-# clone the repo
 git clone $aw_url $aw_path
-[ $? -ne 0 ] && exit 1 # if the git clone fails (usually due to auth) bail
 
 # Linux install
 if [[ $OSTYPE == "linux-gnu" ]]; then
