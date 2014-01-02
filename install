@@ -8,35 +8,30 @@
 #
 #   $ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | bash
 
-err() { echo "$@" 1>&2; }
+set -e
 
-check_bin() {
-  which $1 &>/dev/null
-  return $?
-}
+###
+# defs
+###
 
-check_install() {
-  check_bin $1
-  if [ $? -ne 0 ]; then
+err() { echo -e "$@" 1>&2; }
+
+check_installed() { hash $1 &> /dev/null; }
+
+require_installed() {
+  if ! check_installed $1; then
     err "vim-anywhere requires $1 to function"
     if [[ "$2" != "" ]]; then echo $2; fi
     exit 1
   fi
 }
 
-check_install_among() {
-  found=0
-  for bin in $*; do
-    check_bin $bin
-    if [ $? -eq 0 ]; then
-      found=1
-      break
-    fi
+require_one_installed() {
+  for file in $*; do
+    check_installed $file && return
   done
-  if [ "$found" -eq 0 ]; then
-    err "vim-anywhere requires one of those binaries: $*"
-    exit 1
-  fi
+  err "vim-anywhere requires one of the following to be installed:\n$*"
+  exit 1
 }
 
 aw_path=$HOME/.vim-anywhere
@@ -55,19 +50,23 @@ if [ -a $aw_path ]; then
   # Reinstall vim-anywhere (y/n)? ... or something like that
 fi
 
-check_install git
+require_installed git
 
-# If we are on Linux
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  check_install_among gconftool gsettings
-  check_install gvim
-  check_install xclip
+# if we are in a git repo, unset env vars
+if git rev-parse --git-dir &> /dev/null; then
+  unset $(git rev-parse --local-env-vars) &> /dev/null
+fi
 
-# If we are on OSX
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-  check_install brew 'Visit http://brew.sh for details.'
-  check_install mvim 'Run `brew install macvim`.'
+# Linux specific checks
+if [[ $OSTYPE == "linux-gnu" ]]; then
+  require_one_installed gconftool gsettings
+  require_installed gvim
+  require_installed xclip
 
+# OSX specific checks
+elif [[ $OSTYPE == "darwin"* ]]; then
+  require_installed brew 'Visit http://brew.sh for details.'
+  require_installed mvim 'Run `brew install macvim`.'
 fi
 
 ###
@@ -76,36 +75,34 @@ fi
 
 echo "Installing vim-anywhere..."
 
-# unset any local git env variables
-unset $(git rev-parse --local-env-vars) &>/dev/null
-
-# clone the repo into the current user's home folder
+# clone the repo
 git clone $aw_url $aw_path
-# if the git clone fails (usually due to auth) bail
-[ $? -ne 0 ] && exit 1
+[ $? -ne 0 ] && exit 1 # if the git clone fails (usually due to auth) bail
 
-# If we are on Linux
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+# Linux install
+if [[ $OSTYPE == "linux-gnu" ]]; then
   name="vim-anywhere"
   binding="<CTRL><ALT>v"
-  action="$aw_path/bin/run"
-  check_bin gconftool
-  if [ $? -eq 0 ]; then
-    kbd=/desktop/gnome/keybindings/vim-anywhere
-    gconftool -t str --set $kbd/name $name
-    gconftool -t str --set $kbd/binding $binding
-    gconftool -t str --set $kbd/action $action
-  else
-    mky=org.gnome.settings-daemon.plugins.media-keys
-    ckb=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
-    kbd=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vim-anywhere/
-    gsettings set $mky custom-keybindings "['others', '$kbd']"
-    gsettings set $ckb:$kbd binding $binding
-    gsettings set $ckb:$kbd command $action
-    gsettings set $ckb:$kbd name $name
+  action=$aw_path/bin/run
+
+  if check_installed gconftool; then
+    kbd_path=/desktop/gnome/keybindings/vim-anywhere
+    gconftool -t str --set $kbd_path/name $name
+    gconftool -t str --set $kbd_path/binding $binding
+    gconftool -t str --set $kbd_path/action $action
+
+  else # gsettings must be installed
+    media_keys=org.gnome.settings-daemon.plugins.media-keys
+    custom_kbd=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
+    kbd_path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vim-anywhere/
+    gsettings set $media_keys custom-keybindings "['others', '$kbd_path']"
+    gsettings set $custom_kbd:$kbd_path name $name
+    gsettings set $custom_kbd:$kbd_path binding $binding
+    gsettings set $custom_kbd:$kbd_path command $action
   fi
-# If we are on OSX
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+
+# OSX install
+elif [[ $OSTYPE == "darwin"* ]]; then
   # install the workflow as a service
   cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
 
@@ -116,7 +113,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
   # As a partial workaround, run a script that opens the shortcut options
   echo "Opening System Preferences..."
-  osascript $aw_path/script/open_shortcuts.scpt &>/dev/null
+  osascript $aw_path/script/open_shortcuts.scpt &> /dev/null
 fi
 
 echo "vim-anywhere has been successfully installed!"
