@@ -3,6 +3,24 @@
 # vim-anywhere - use Vim whenever, wherever
 # Author: Chris Knadler
 # Homepage: https://www.github.com/cknadler/vim-anywhere
+#
+# Open a temporary file with Vim. Once Vim is closed, copy the contents of that
+# file to the system clipboard.
+
+###
+# opts
+###
+
+while getopts ":v" opt; do
+  case "$opt" in
+    v) set -x ;;
+    \?) echo "Invalid option: -$OPTARG" >&2 ;;
+  esac
+done
+
+###
+# run
+###
 
 dir=/tmp/vim-anywhere
 file=$dir/doc-$(date +"%y%m%d%H%M%S")
