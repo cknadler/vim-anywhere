@@ -1,4 +1,4 @@
-# vim-anywhere
+# vim-anywhere [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/cknadler/vim-anywhere/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 Sometimes, you edit text outside of Vim. These are sad times. Enter
 vim-anywhere!
@@ -99,8 +99,6 @@ Vim to do more than just edit code.
 Love vim-anywhere? Hate it? Want to change it completely? Email me or open and
 issue and lets talk. Pull requests, suggestions and issues of any kind are
 welcome with open arms.
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/cknadler/vim-anywhere/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 ## License
 
