@@ -6,20 +6,36 @@
 #
 # Updates vim-anywhere
 
+set -e
+
+###
+# defs
+###
+
+err() { echo -e "$@" 1>&2; }
+
 aw_path=$HOME/.vim-anywhere
 
+###
+# update
+###
+
 if [ ! -d $aw_path ]; then
-  echo "vim-anywhere doesn't seem to be installed."
+  err "vim-anywhere doesn't seem to be installed."
   exit 1
 fi
 
-unset $(git rev-parse --local-env-vars)
+# if we are in a git repo, unset env vars
+if git rev-parse --git-dir &> /dev/null; then
+  unset $(git rev-parse --local-env-vars) &> /dev/null
+fi
+
 pushd $aw_path
   git pull origin master
   [ $? -ne 0 ] && exit 1
 popd
 
-# If we are on OSX
+# OSX only
 if [[ $OSTYPE == "darwin"* ]]; then
   cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
 fi
