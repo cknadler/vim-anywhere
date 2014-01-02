@@ -47,7 +47,7 @@ for details.
 
 ## Keybinding
 
-__OSX:__ ( default = unbound, suggested = ctrl+cmd+v )
+__OSX:__ ( default = unbound, suggested = `ctrl+cmd+v` )
 
 They keyboard shortcut for invoking vim-anywhere is unbound by default on OSX.
 The installation script will automatically open
@@ -55,18 +55,19 @@ The installation script will automatically open
 
 ![keyboard shortcut](assets/shortcut.png)
 
-__Linux:__ ( default = ctrl+alt+v )
+__Linux:__ ( default = `ctrl+alt+v` )
 
 ```bash
 $ gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding <custom binding>
 ```
 
-## Previous Files
+## History
 
 vim-anywhere creates a temporary file in `/tmp/vim-anywhere` when
-invoked. These files stick around until you restart your system.
+invoked. These files stick around until you restart your system, giving you
+a temporary history.
 
-You can list all of your recent files with:
+View your history:
 
 ```bash
 $ ls /tmp/vim-anywhere
