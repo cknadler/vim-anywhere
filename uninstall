@@ -6,23 +6,33 @@
 #
 # Uninstalls vim-anywhere
 
+check_installed() { hash $1 &> /dev/null; }
+
 aw_path=$HOME/.vim-anywhere
+doc_path=/tmp/vim-anywhere
 
-# If we are on Linux
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+# Linux uninstall
+if [[ $OSTYPE == "linux-gnu" ]]; then
   rm -rf $aw_path \
-         /tmp/vim-anywhere
+         $doc_path
 
-  kbd=/desktop/gnome/keybindings/vim-anywhere
-  gconftool --unset $kbd/name
-  gconftool --unset $kbd/binding
-  gconftool --unset $kbd/action
+  if check_installed gconftool; then
+    kbd_path=/desktop/gnome/keybindings/vim-anywhere
+    gconftool --unset $kbd_path/name
+    gconftool --unset $kbd_path/binding
+    gconftool --unset $kbd_path/action
 
-# If we are on OSX
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+  else # gsettings must be installed
+    custom_kbd=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
+    kbd_path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vim-anywhere/
+    gsettings reset-recursively $custom_kbd:$kbd_path
+  fi
+
+# OSX uninstall
+elif [[ $OSTYPE == "darwin"* ]]; then
   rm -rf $aw_path \
-         $HOME/Library/Services/VimAnywhere.workflow \
-         /private/tmp/vim-anywhere
+         $doc_path \
+         $HOME/Library/Services/VimAnywhere.workflow
 fi
 
 echo "vim-anywhere has been successfully uninstalled!"
