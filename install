@@ -92,6 +92,7 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
     gconftool -t str --set $kbd_path/action $action
 
   else # gsettings must be installed
+    # TODO: can this be simplified?
     media_keys=org.gnome.settings-daemon.plugins.media-keys
     custom_kbd=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
     kbd_path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vim-anywhere/
