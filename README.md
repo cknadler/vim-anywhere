@@ -50,7 +50,7 @@ __OSX:__ ( default = unbound, suggested = `ctrl+cmd+v` )
 
 They keyboard shortcut for invoking vim-anywhere is unbound by default on OSX.
 The installation script will automatically open
-"System Preferences" > "Keyboard" > "Shortcuts". Fill in the following:
+`System Preferences > Keyboard > Shortcuts`. Fill in the following:
 
 ![keyboard shortcut](assets/shortcut.png)
 
