@@ -6,7 +6,7 @@ vim-anywhere!
 ![demo](assets/demo.gif)
 
 Once [invoked](#keybinding), vim-anywhere will open a buffer. Close it and it's
-contents are copied to your clipboard and your previous application is
+contents are copied to your __clipboard__ and your previous application is
 refocused.
 
 ## Installation
