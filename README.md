@@ -15,8 +15,7 @@ refocused.
 
 __OSX:__
 
-- [Homebrew](http://brew.sh/)
-- MacVim: `brew install macvim`
+- MacVim (`brew install macvim`)
 
 __Linux:__
 
