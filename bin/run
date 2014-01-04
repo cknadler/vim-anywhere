@@ -56,7 +56,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   app=$(osascript $aw_path/script/current_app.scpt)
   mvim_path=$(cat $aw_path/.path)
 
-  require_file_exists $mvim_path/s \
+  require_file_exists $mvim_path \
     "mvim must have been move or uninstalled.\nPlease make sure it is available in your path and then reinstall vim-anywhere."
 
   $mvim_path --nofork $file
