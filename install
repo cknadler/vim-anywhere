@@ -116,6 +116,9 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
 
 # OSX install
 elif [[ $OSTYPE == "darwin"* ]]; then
+  # store the absolute path to the mvim executable
+  which mvim > $aw_path/.path
+
   # install the workflow as a service
   cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
 
