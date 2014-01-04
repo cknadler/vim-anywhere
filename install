@@ -76,7 +76,6 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
 
 # OSX specific checks
 elif [[ $OSTYPE == "darwin"* ]]; then
-  require_installed brew 'Visit http://brew.sh for details.'
   require_installed mvim 'Run `brew install macvim`.'
 fi
 
