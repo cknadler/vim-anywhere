@@ -7,22 +7,29 @@
 # Open a temporary file with Vim. Once Vim is closed, copy the contents of that
 # file to the system clipboard.
 
-###
-# defs
-###
+### Function definitions {{{
 
-err() { echo -e "$@" 1>&2; }
+# Print out a message to stderr. {{{
+#
+# $1 the error message.
+err() {
+    echo -e "$@" 1>&2;
+} # }}}
 
+# Checks if a file exists. If it does not exit with an error. {{{
+#
+# $1 The filename.
+# $2 A message which will be printed out on stderr if the file does not exist.
 require_file_exists() {
   if [ ! -e $1 ]; then
     err "$1 does not exist. $2"
     exit 1
   fi
-}
+} # }}}
 
-###
-# opts
-###
+# }}}
+
+### Handle command-Line arguments/options {{{
 
 while getopts ":v" opt; do
   case "$opt" in
@@ -31,36 +38,43 @@ while getopts ":v" opt; do
   esac
 done
 
-###
-# run
-###
+#}}}
 
-aw_path=$HOME/.vim-anywhere
-dir=/tmp/vim-anywhere
-file=$dir/doc-$(date +"%y%m%d%H%M%S")
-mkdir -p $dir
-touch $file
+### main {{{
+
+AW_PATH=$HOME/.vim-anywhere
+TMPFILE=$(mktemp /tmp/vim-anywhere-doc-XXXXXX)
+
+# Make sure the temporary file is removed on exit.
+trap "{ rm -f $TMPFILE; }" EXIT
 
 # Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  chmod o-r $file # Make file only readable by you
-  gvim --nofork $file
-  cat $file | xclip -selection clipboard
+  gvim --nofork $TMPFILE
+  cat $TMPFILE | xclip -selection clipboard
 
 # OSX
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # if there is no path file, it must have been deleted or the installer failed
-  require_file_exists $aw_path/.path \
+  require_file_exists $AW_PATH/.path \
     "Please reinstall vim-anywhere."
 
-  app=$(osascript $aw_path/script/current_app.scpt)
-  mvim_path=$(cat $aw_path/.path)
+  app=$(osascript $AW_PATH/script/current_app.scpt)
+  mvim_path=$(cat $AW_PATH/.path)
 
   require_file_exists $mvim_path \
-    "mvim must have been move or uninstalled.\nPlease make sure it is available in your path and then reinstall vim-anywhere."
+    "mvim must have been move or uninstalled.\nPlease make sure it is "\
+    "available in your path and then reinstall vim-anywhere."
 
-  $mvim_path --nofork $file
+  $mvim_path --nofork $TMPFILE
   # todo, fix invalid file
-  pbcopy < $file
+  pbcopy < $TMPFILE
   osascript -e "activate application \"$app\""
+else
+    err "OS '$OSTYPE' is not supported!"
+    exit 1
 fi
+
+# }}}
+
+# vim: set fdm=marker :

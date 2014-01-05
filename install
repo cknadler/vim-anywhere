@@ -10,9 +10,7 @@
 
 set -e
 
-###
-# opts
-###
+### Handle command-Line arguments/options {{{
 
 while getopts ":v" opt; do
   case "$opt" in
@@ -21,36 +19,62 @@ while getopts ":v" opt; do
   esac
 done
 
-###
-# defs
-###
+# }}}
 
-err() { echo -e "$@" 1>&2; }
+### Function definitions {{{
 
-check_installed() { hash $1 &> /dev/null; }
+# Print out a message to stderr. {{{
+#
+# $1 the error message.
+err() {
+    echo -e "$@" 1>&2;
+} # }}}
 
+# Check if a command is available on the system. {{{
+#
+# Returns an error-code if the command is not found on the system.
+#
+# $1 the command name.
+check_installed() {
+    hash $1 &> /dev/null;
+} # }}}
+
+# Require the existence of a specific command. {{{
+#
+# Checks if the command is available on this system. If not, bail out with an
+# error code.
+#
+# $1 the command name to check.
+# $2 [optional] message to print out to stdout in case the command was not
+#    found.
 require_installed() {
   if ! check_installed $1; then
     err "vim-anywhere requires $1 to function"
     if [[ "$2" != "" ]]; then echo $2; fi
     exit 1
   fi
-}
+} # }}}
 
+# Require any one of the given commands to be installed. {{{
+#
+# If none of the given commands is found on the system, bail out with an exit
+# code.
+#
+# $* A list of command names to check.
 require_one_installed() {
   for file in $*; do
     check_installed $file && return
   done
   err "vim-anywhere requires one of the following to be installed:\n$*"
   exit 1
-}
+} # }}}
+
+# }}}
 
 aw_path=$HOME/.vim-anywhere
 aw_url='https://github.com/cknadler/vim-anywhere'
 
-###
-# pre-installation checks
-###
+### Pre-installation checks {{{
 
 # Check if vim-anywhere is already installed. If so, remove the previous
 # installation.
@@ -77,17 +101,20 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
 # OSX specific checks
 elif [[ $OSTYPE == "darwin"* ]]; then
   require_installed mvim 'Run `brew install macvim`.'
+else
+  echo "OS '$OSTYPE' is not supported!"
+  exit 1
 fi
 
-###
-# installation
-###
+# }}}
+
+### Installation {{{
 
 echo "Installing vim-anywhere..."
 
 git clone $aw_url $aw_path
 
-# Linux install
+# Linux install {{{
 if [[ $OSTYPE == "linux-gnu" ]]; then
   name="vim-anywhere"
   binding="<CTRL><ALT>v"
@@ -112,8 +139,9 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
     gsettings set $custom_kbd:$kbd_path binding $binding
     gsettings set $custom_kbd:$kbd_path command $action
   fi
+  # }}}
 
-# OSX install
+# OSX install {{{
 elif [[ $OSTYPE == "darwin"* ]]; then
   # store the absolute path to the mvim executable
   which mvim > $aw_path/.path
@@ -131,5 +159,10 @@ elif [[ $OSTYPE == "darwin"* ]]; then
   echo "Opening System Preferences..."
   osascript $aw_path/script/open_shortcuts.scpt &> /dev/null
 fi
+# }}}
 
 echo "vim-anywhere has been successfully installed!"
+
+# }}}
+
+# vim: set foldmethod=marker :
