@@ -39,6 +39,7 @@ aw_path=$HOME/.vim-anywhere
 dir=/tmp/vim-anywhere
 file=$dir/doc-$(date +"%y%m%d%H%M%S")
 mkdir -p $dir
+touch $file
 
 # Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
