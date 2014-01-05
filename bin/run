@@ -54,7 +54,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     exit 1
   fi
 
-  open -Wa $macvim $file
+  open -Wna $macvim $file
   # todo, fix invalid file
   pbcopy < $file
 
