@@ -44,17 +44,16 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 
 # OSX
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  macvim=MacVim.app
   app=$(osascript $aw_path/script/current_app.scpt)
+  macvim=MacVim.app
+  macvim_path=$(find {/Applications,~/Applications} -name '*.app' -maxdepth 1 -mindepth 1 | grep -s $macvim)
 
-  find {/Applications,~/Applications} -name '*.app' -maxdepth 1 -mindepth 1 | grep -s $macvim >/dev/null
-
-  if [ $? -eq 1 ]; then
+  if [ -z $macvim_path ]; then
     err "$macvim does not seem to be installed. Please make sure $macvim is installed first."
     exit 1
   fi
 
-  open -Wna $macvim $file
+  $macvim_path/Contents/MacOS/Vim -g --nofork ${1:+"$@"} $file
   # todo, fix invalid file
   pbcopy < $file
 
