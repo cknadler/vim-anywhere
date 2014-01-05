@@ -13,13 +13,6 @@
 
 err() { echo -e "$@" 1>&2; }
 
-require_file_exists() {
-  if [ ! -e $1 ]; then
-    err "$1 does not exist. $2"
-    exit 1
-  fi
-}
-
 ###
 # opts
 ###
@@ -38,25 +31,32 @@ done
 aw_path=$HOME/.vim-anywhere
 dir=/tmp/vim-anywhere
 file=$dir/doc-$(date +"%y%m%d%H%M%S")
+
+# file prep
 mkdir -p $dir
+touch $file
+chmod o-r $file # Make file only readable by you
 
 # Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  touch $file
-  chmod o-r $file # Make file only readable by you
   gvim --nofork $file
   cat $file | xclip -selection clipboard
 
 # OSX
 elif [[ "$OSTYPE" == "darwin"* ]]; then
+  macvim=MacVim.app
   app=$(osascript $aw_path/script/current_app.scpt)
-  mvim_path=$(command -v mvim)
 
-  require_file_exists $mvim_path \
-    "mvim must have been move or uninstalled.\nPlease make sure it is available in your path."
+  find {/Applications,~/Applications} -name '*.app' -maxdepth 1 -mindepth 1 | grep -s $macvim >/dev/null
 
-  $mvim_path --nofork $file
+  if [ $? -eq 1 ]; then
+    err "$macvim does not seem to be installed. Please make sure $macvim is installed first."
+    exit 1
+  fi
+
+  open -Wa $macvim $file
   # todo, fix invalid file
   pbcopy < $file
+
   osascript -e "activate application \"$app\""
 fi
