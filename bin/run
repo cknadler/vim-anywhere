@@ -36,16 +36,15 @@ done
 ###
 
 aw_path=$HOME/.vim-anywhere
-dir=/tmp/vim-anywhere
-file=$dir/doc-$(date +"%y%m%d%H%M%S")
-mkdir -p $dir
-touch $file
+tmpfile=$(mktemp /tmp/vim-anywhere-doc-XXXXXX)
+
+# Make sure the temporary file is removed on exit.
+trap "{ rm -f $tmpfile; }" EXIT
 
 # Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  chmod o-r $file # Make file only readable by you
-  gvim --nofork $file
-  cat $file | xclip -selection clipboard
+  gvim --nofork $tmpfile
+  cat $tmpfile | xclip -selection clipboard
 
 # OSX
 elif [[ "$OSTYPE" == "darwin"* ]]; then
@@ -59,8 +58,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   require_file_exists $mvim_path \
     "mvim must have been move or uninstalled.\nPlease make sure it is available in your path and then reinstall vim-anywhere."
 
-  $mvim_path --nofork $file
+  $mvim_path --nofork $tmpfile
   # todo, fix invalid file
-  pbcopy < $file
+  pbcopy < $tmpfile
   osascript -e "activate application \"$app\""
 fi
