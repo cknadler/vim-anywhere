@@ -63,7 +63,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   mvim_path=$(cat $AW_PATH/.path)
 
   require_file_exists $mvim_path \
-    "mvim must have been move or uninstalled.\nPlease make sure it is available in your path and then reinstall vim-anywhere."
+    "mvim must have been move or uninstalled.\nPlease make sure it is "\
+    "available in your path and then reinstall vim-anywhere."
 
   $mvim_path --nofork $TMPFILE
   # todo, fix invalid file
