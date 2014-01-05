@@ -43,7 +43,6 @@ touch $file
 
 # Linux
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  touch $file
   chmod o-r $file # Make file only readable by you
   gvim --nofork $file
   cat $file | xclip -selection clipboard
