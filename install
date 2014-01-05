@@ -119,6 +119,7 @@ elif [[ $OSTYPE == "darwin"* ]]; then
   which mvim > $aw_path/.path
 
   # install the workflow as a service
+  mkdir -p $HOME/Library/Services
   cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
 
   # TODO: add shortcut
