@@ -77,6 +77,8 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
 # OSX specific checks
 elif [[ $OSTYPE == "darwin"* ]]; then
   require_installed mvim 'Run `brew install macvim`.'
+
+# Unsupported OS
 else
   echo "OS '$OSTYPE' is not supported!"
   exit 1
