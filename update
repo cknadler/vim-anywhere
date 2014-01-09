@@ -25,13 +25,13 @@ done
 
 err() { echo -e "$@" 1>&2; }
 
-aw_path=$HOME/.vim-anywhere
+AW_PATH=$HOME/.vim-anywhere
 
 ###
 # update
 ###
 
-if [ ! -d $aw_path ]; then
+if [ ! -d $AW_PATH ]; then
   err "vim-anywhere doesn't seem to be installed."
   exit 1
 fi
@@ -41,14 +41,14 @@ if git rev-parse --git-dir &> /dev/null; then
   unset $(git rev-parse --local-env-vars) &> /dev/null
 fi
 
-pushd $aw_path
+pushd $AW_PATH
   git pull origin master
   [ $? -ne 0 ] && exit 1
 popd
 
 # OSX only
 if [[ $OSTYPE == "darwin"* ]]; then
-  cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
+  cp -R $AW_PATH/VimAnywhere.workflow $HOME/Library/Services
 fi
 
 echo "vim-anywhere has been successfully updated!"

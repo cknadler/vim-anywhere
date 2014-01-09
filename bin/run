@@ -35,33 +35,34 @@ done
 # run
 ###
 
-aw_path=$HOME/.vim-anywhere
-dir=/tmp/vim-anywhere
-file=$dir/doc-$(date +"%y%m%d%H%M%S")
-mkdir -p $dir
-touch $file
+AW_PATH=$HOME/.vim-anywhere
+TMPFILE_DIR=/tmp/vim-anywhere
+TMPFILE=$TMPFILE_DIR/doc-$(date +"%y%m%d%H%M%S")
+
+mkdir -p $TMPFILE_DIR
+touch $TMPFILE
 
 # Linux
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  chmod o-r $file # Make file only readable by you
-  gvim --nofork $file
-  cat $file | xclip -selection clipboard
+if [[ $OSTYPE == "linux-gnu" ]]; then
+  chmod o-r $TMPFILE # Make file only readable by you
+  gvim --nofork $TMPFILE
+  cat $TMPFILE | xclip -selection clipboard
 
 # OSX
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+elif [[ $OSTYPE == "darwin"* ]]; then
   # if there is no path file, it must have been deleted or the installer failed
-  require_file_exists $aw_path/.path \
+  require_file_exists $AW_PATH/.path \
     "Please reinstall vim-anywhere."
 
-  app=$(osascript $aw_path/script/current_app.scpt)
-  mvim_path=$(cat $aw_path/.path)
+  app=$(osascript $AW_PATH/script/current_app.scpt)
+  mvim_path=$(cat $AW_PATH/.path)
 
   require_file_exists $mvim_path \
     "mvim must have been move or uninstalled.\nPlease make sure it is" \
     "available in your path and then reinstall vim-anywhere."
 
-  $mvim_path --nofork $file
+  $mvim_path --nofork $TMPFILE
   # todo, fix invalid file
-  pbcopy < $file
+  pbcopy < $TMPFILE
   osascript -e "activate application \"$app\""
 fi

@@ -45,8 +45,8 @@ require_one_installed() {
   exit 1
 }
 
-aw_path=$HOME/.vim-anywhere
-aw_url='https://github.com/cknadler/vim-anywhere'
+AW_PATH=$HOME/.vim-anywhere
+AW_URL='https://github.com/cknadler/vim-anywhere'
 
 ###
 # pre-installation checks
@@ -54,9 +54,9 @@ aw_url='https://github.com/cknadler/vim-anywhere'
 
 # Check if vim-anywhere is already installed. If so, remove the previous
 # installation.
-if [ -a $aw_path ]; then
+if [ -a $AW_PATH ]; then
   echo 'Cleaning up previous installation...'
-  rm -rf $aw_path
+  rm -rf $AW_PATH
   # TODO: It would be nice to have an option for user input here
   # Reinstall vim-anywhere (y/n)? ... or something like that
 fi
@@ -90,13 +90,13 @@ fi
 
 echo "Installing vim-anywhere..."
 
-git clone $aw_url $aw_path
+git clone $AW_URL $AW_PATH
 
 # Linux install
 if [[ $OSTYPE == "linux-gnu" ]]; then
   name="vim-anywhere"
   binding="<CTRL><ALT>v"
-  action=$aw_path/bin/run
+  action=$AW_PATH/bin/run
 
   # We always try gconftool first. It is deprecated so it won't be on newer
   # installs. If it's installed, we know we are on older versions of Gnome.
@@ -121,11 +121,11 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
 # OSX install
 elif [[ $OSTYPE == "darwin"* ]]; then
   # store the absolute path to the mvim executable
-  which mvim > $aw_path/.path
+  which mvim > $AW_PATH/.path
 
   # install the workflow as a service
   mkdir -p $HOME/Library/Services
-  cp -R $aw_path/VimAnywhere.workflow $HOME/Library/Services
+  cp -R $AW_PATH/VimAnywhere.workflow $HOME/Library/Services
 
   # TODO: add shortcut
   # It would be great if there was a way to set the keyboard shortcut for
@@ -134,7 +134,7 @@ elif [[ $OSTYPE == "darwin"* ]]; then
 
   # As a partial workaround, run a script that opens the shortcut options
   echo "Opening System Preferences..."
-  osascript $aw_path/script/open_shortcuts.scpt &> /dev/null
+  osascript $AW_PATH/script/open_shortcuts.scpt &> /dev/null
 fi
 
 echo "vim-anywhere has been successfully installed!"

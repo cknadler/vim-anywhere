@@ -25,14 +25,14 @@ done
 
 check_installed() { hash $1 &> /dev/null; }
 
-aw_path=$HOME/.vim-anywhere
-doc_path=/tmp/vim-anywhere
+AW_PATH=$HOME/.vim-anywhere
+DOC_PATH=/tmp/vim-anywhere
 
 ###
 # uninstall
 ###
 
-rm -rf $aw_path $doc_path
+rm -rf $AW_PATH $DOC_PATH
 
 # Linux uninstall
 if [[ $OSTYPE == "linux-gnu" ]]; then
