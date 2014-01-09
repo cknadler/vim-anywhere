@@ -15,7 +15,7 @@ err() { echo -e "$@" 1>&2; }
 
 require_file_exists() {
   if [ ! -e $1 ]; then
-    err "$1 does not exist. $2"
+    err "$1 does not exist. ${@:2}"
     exit 1
   fi
 }
@@ -57,7 +57,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   mvim_path=$(cat $aw_path/.path)
 
   require_file_exists $mvim_path \
-    "mvim must have been move or uninstalled.\nPlease make sure it is "\
+    "mvim must have been move or uninstalled.\nPlease make sure it is" \
     "available in your path and then reinstall vim-anywhere."
 
   $mvim_path --nofork $file
