@@ -78,3 +78,6 @@ elif [[ $OSTYPE == "darwin"* ]]; then
   pbcopy < $TMPFILE
   osascript -e "activate application \"$app\""
 fi
+
+# Delete temporary files older than 60 minutes
+find $TMPFILE_DIR -name "doc-*" -type f -mtime +60m -exec srm --simple -- {} +
