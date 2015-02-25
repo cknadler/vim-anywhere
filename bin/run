@@ -74,6 +74,6 @@ elif [[ $OSTYPE == "darwin"* ]]; then
 
   $mvim_path $VIM_OPTS $TMPFILE
   # todo, fix invalid file
-  pbcopy < $TMPFILE
+  LANG=en_US.UTF-8 pbcopy < $TMPFILE
   osascript -e "activate application \"$app\""
 fi
