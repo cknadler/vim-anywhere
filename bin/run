@@ -36,12 +36,16 @@ done
 ###
 
 AW_PATH=$HOME/.vim-anywhere
+AW_SETTINGS=$AW_PATH/settings
 TMPFILE_DIR=/tmp/vim-anywhere
 TMPFILE=$TMPFILE_DIR/doc-$(date +"%y%m%d%H%M%S")
 VIM_OPTS=--nofork
 
 # Use ~/.gvimrc.min or ~/.vimrc.min if one exists
 VIMRC_PATH=($HOME/.gvimrc.min $HOME/.vimrc.min)
+
+# load any custom settings
+source $AW_SETTINGS;
 
 for vimrc_path in "${VIMRC_PATH[@]}"; do
     if [ -f $vimrc_path ]; then
@@ -56,6 +60,9 @@ touch $TMPFILE
 # Linux
 if [[ $OSTYPE == "linux-gnu" ]]; then
   chmod o-r $TMPFILE # Make file only readable by you
+  if [ "$OPEN_CLIPBOARD_CONTENTS" -eq "1" ]; then
+      xclip -selection clipboard -o > $TMPFILE;
+  fi
   gvim $VIM_OPTS $TMPFILE
   cat $TMPFILE | xclip -selection clipboard
 
@@ -66,6 +73,10 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     "Please reinstall vim-anywhere."
 
   app=$(osascript $AW_PATH/script/current_app.scpt)
+
+  if [ "$OPEN_CLIPBOARD_CONTENTS" -eq "1" ]; then
+      pbpaste > $TMPFILE;
+  fi
   mvim_path=$(cat $AW_PATH/.path)
 
   require_file_exists $mvim_path \
