@@ -93,7 +93,7 @@ Vim to do more than just edit code.
 
 ## Contributing
 
-Love vim-anywhere? Hate it? Want to change it completely? Email me or open and
+Love vim-anywhere? Hate it? Want to change it completely? Email me or open an
 issue and lets talk. Pull requests, suggestions and issues of any kind are
 welcome with open arms.
 
