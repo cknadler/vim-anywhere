@@ -131,6 +131,7 @@ elif [[ $OSTYPE == "darwin"* ]]; then
   # It would be great if there was a way to set the keyboard shortcut for
   # vim-anywhere programatically (without GUI scripting). If there ends up being a
   # way to do this, it would go here.
+  /usr/libexec/PlistBuddy -c "add :NSServicesStatus:(null)\ -\ VimAnywhere\ -\ runWorkflowAsService:key_equivalent string @^v" ~/Library/Preferences/pbs.plist
 
   # As a partial workaround, run a script that opens the shortcut options
   echo "Opening System Preferences..."
