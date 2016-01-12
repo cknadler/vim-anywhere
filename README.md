@@ -55,8 +55,15 @@ The installation script will automatically open
 
 __Linux:__ ( default = `ctrl+alt+v` )
 
+*Gnome*
 ```bash
 $ gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding <custom binding>
+```
+
+*I3WM*
+```bash
+$ echo "bindsym $mod+Alt+v exec ~/.vim-anywhere/bin/run" >> ~/.i3/config:
+$ echo "Remember to press $mod+shift+r to reload the I3WM config!"
 ```
 
 ## History
