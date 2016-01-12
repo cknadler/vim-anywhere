@@ -92,12 +92,6 @@ and paste it into whatever applicaiton I was just using. vim-anywhere attempts
 to automate this process as much as possible, reducing the friction of using
 Vim to do more than just edit code.
 
-## Roadmap
-
-- &#x2610; Find a way to automate setting vim-anywhere's keyboard shortcut (OSX)
-- &#x2612; Gnome support
-- &#x2610; KDE support
-
 ## Contributing
 
 Love vim-anywhere? Hate it? Want to change it completely? Email me or open an
