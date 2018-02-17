@@ -29,7 +29,7 @@ while getopts ":v:c" opt; do
     v) set -x ;;
     # This can be used to read the clipboard to the temp file
     # before Vim starts:
-    c) set READ_CLIPBOARD = 1 ;;
+    c) READ_CLIPBOARD=1;;
     \?) echo "Invalid option: -$OPTARG" >&2 ;;
   esac
 done
