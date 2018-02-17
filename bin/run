@@ -24,9 +24,12 @@ require_file_exists() {
 # opts
 ###
 
-while getopts ":v" opt; do
+while getopts ":v:c" opt; do
   case "$opt" in
     v) set -x ;;
+    # This can be used to read the clipboard to the temp file
+    # before Vim starts:
+    c) set READ_CLIPBOARD = 1 ;;
     \?) echo "Invalid option: -$OPTARG" >&2 ;;
   esac
 done
