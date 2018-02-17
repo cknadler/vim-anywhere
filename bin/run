@@ -81,6 +81,9 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     "mvim must have been move or uninstalled.\nPlease make sure it is" \
     "available in your path and then reinstall vim-anywhere."
 
+  # @naydichev's line for OSX: this copies the clipboard to the $TMPFILE
+  LANG=en_US.UTF-8 pbpaste > $TMPFILE
+
   $mvim_path $VIM_OPTS $TMPFILE
   # todo, fix invalid file
   # -c option for reading the clipboard has not yet been implemented here
