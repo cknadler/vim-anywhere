@@ -88,7 +88,7 @@ $ vim $( ls /tmp/vim-anywhere | sort -r | head -n 1 )
 
 I use Vim for _almost_ everything. I wish I didn't have to say _almost_. My
 usual workflow is to open Vim, write, copy the text out of my current buffer
-and paste it into whatever applicaiton I was just using. vim-anywhere attempts
+and paste it into whatever application I was just using. vim-anywhere attempts
 to automate this process as much as possible, reducing the friction of using
 Vim to do more than just edit code.
 
