@@ -71,6 +71,8 @@ The following (adding Shift) allows you to start the vim session with the conten
 ```bash
 $ echo "bindsym $mod+Mod1+Shift+v exec ~/.vim-anywhere/bin/run -c" >> ~/.i3/config # remember to reload your config after
 ```
+
+
 ## History
 
 vim-anywhere creates a temporary file in `/tmp/vim-anywhere` when
