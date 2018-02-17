@@ -34,7 +34,6 @@ done
 ###
 # run
 ###
-
 AW_PATH=$HOME/.vim-anywhere
 TMPFILE_DIR=/tmp/vim-anywhere
 TMPFILE=$TMPFILE_DIR/doc-$(date +"%y%m%d%H%M%S")
@@ -56,7 +55,17 @@ touch $TMPFILE
 # Linux
 if [[ $OSTYPE == "linux-gnu" ]]; then
   chmod o-r $TMPFILE # Make file only readable by you
-  gvim $VIM_OPTS $TMPFILE
+  text_editor="$(which gvim) $VIM_OPTS"
+
+  # if $VISUAL is specified, use that instead of gvim
+  if [ -e $HOME/.profile ]; then
+      source $HOME/.profile
+      if env | grep -q "VISUAL"; then
+          text_editor="$VISUAL"
+      fi;
+  fi;
+
+  $text_editor $TMPFILE
   cat $TMPFILE | xclip -selection clipboard
 
 # OSX
@@ -67,14 +76,23 @@ elif [[ $OSTYPE == "darwin"* ]]; then
 
   app=$(osascript $AW_PATH/script/current_app.scpt)
   mvim_path=$(cat $AW_PATH/.path)
+  text_editor="$mvim_path $VIM_OPTS"
 
   require_file_exists $mvim_path \
     "mvim must have been move or uninstalled.\nPlease make sure it is" \
     "available in your path and then reinstall vim-anywhere."
 
-  $mvim_path $VIM_OPTS $TMPFILE
+  # if $VISUAL is specified, use that instead of mvim
+  if [ -e $HOME/.profile ]; then
+    source $HOME/.profile
+    if env | grep -q "VISUAL"; then
+        text_editor="$VISUAL"
+    fi;
+  fi;
+
+  $text_editor $TMPFILE
   # todo, fix invalid file
-  
+
   # NOTE
   # Here we set LANG explicitly to be UTF-8 compatible when copying text. The only way that was explicitly
   # setting this to en_US.UTF-8. This may eventually cause issues with other languages. If so, just remove
