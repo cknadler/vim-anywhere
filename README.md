@@ -43,6 +43,19 @@ for details.
 ~/.vim-anywhere/uninstall
 ```
 
+## Arguments
+
+By default, vim-anywhere will open a gvim session with minimal configuration. The below settings can be used to customize vim-anywhere's behavior.
+
+| Option          | Description                 |
+| --------------- |-----------------------------|
+| -v              | Enable verbose output       |
+| -t \<term\>     | Specify a terminal emulator instead of gvim |
+
+__OSX:__
+
+Currently the '-t' flag is not supported.
+
 ## Keybinding
 
 __OSX:__ ( default = unbound, suggested = `ctrl+cmd+v` )
