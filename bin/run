@@ -24,12 +24,17 @@ require_file_exists() {
 # opts
 ###
 
-while getopts ":v" opt; do
+while getopts ":v:c" opt; do
   case "$opt" in
     v) set -x ;;
+    # This can be used to read the clipboard to the temp file
+    # before Vim starts:
+    c) READ_CLIPBOARD="yes";;
     \?) echo "Invalid option: -$OPTARG" >&2 ;;
   esac
 done
+
+echo $READ_CLIPBOARD
 
 ###
 # run
@@ -56,6 +61,10 @@ touch $TMPFILE
 # Linux
 if [[ $OSTYPE == "linux-gnu" ]]; then
   chmod o-r $TMPFILE # Make file only readable by you
+  # This copies the contents of the clipboard to $TMPFILE:
+  if [[ $READ_CLIPBOARD == "yes" ]]; then
+  	xclip -o -selection clipboard > $TMPFILE
+    fi
   gvim $VIM_OPTS $TMPFILE
   cat $TMPFILE | xclip -selection clipboard
 
@@ -72,8 +81,15 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     "mvim must have been move or uninstalled.\nPlease make sure it is" \
     "available in your path and then reinstall vim-anywhere."
 
+  # if the -c option is set then on OSX this will copy the clipboard to TMPFILE
+  if [[ $READ_CLIPBOARD=="yes" ]]; then
+  # @naydichev's line for OSX: this copies the clipboard to the $TMPFILE
+      LANG=en_US.UTF-8 pbpaste > $TMPFILE
+      fi
+
   $mvim_path $VIM_OPTS $TMPFILE
   # todo, fix invalid file
+  # -c option for reading the clipboard has not yet been implemented here
   
   # NOTE
   # Here we set LANG explicitly to be UTF-8 compatible when copying text. The only way that was explicitly

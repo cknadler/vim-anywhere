@@ -127,6 +127,8 @@ elif [[ $OSTYPE == "darwin"* ]]; then
   # install the workflow as a service
   mkdir -p $HOME/Library/Services
   cp -R $AW_PATH/VimAnywhere.workflow $HOME/Library/Services
+  # This adds the OSX workflow that copies the clipboard contents to the TMPFILE before launching vim:
+  cp -R $AW_PATH/VimAnywhere-CopyClipboard.workflow $HOME/Library/Services
 
   # TODO: add shortcut
   # It would be great if there was a way to set the keyboard shortcut for

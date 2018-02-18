@@ -51,6 +51,8 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
 # OSX uninstall
 elif [[ $OSTYPE == "darwin"* ]]; then
   rm -rf $HOME/Library/Services/VimAnywhere.workflow
+  # Removed the workflow that copies the clipboard first:
+  rm -rf $HOME/Library/Services/VimAnywhere-CopyClipboard.workflow
 fi
 
 echo "vim-anywhere has been successfully uninstalled!"
