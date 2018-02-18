@@ -22,10 +22,19 @@ __Linux:__
 - Gnome (or a derivative)
 - gVim
 
+__Windows:__
+
+- AutoHotKey
+- gVim
+
 #### Install
 
 ```bash
 curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | bash
+```
+
+```powershell
+iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/cknadler/vim-anywhere/master/install.ps1'))
 ```
 
 __OSX caveat:__ key binding is unbound by default. See [keybinding](#keybinding)
@@ -66,6 +75,10 @@ $ gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding <custom
 $ echo "bindsym $mod+Alt+v exec ~/.vim-anywhere/bin/run" >> ~/.i3/config # remember to reload your config after
 ```
 Adjust in case `$mod` is not set to ctrl.
+
+__Windows:__
+
+Check the `AutoHotkey` example file from `script/hotkey.example.ahk`
 
 ## History
 
