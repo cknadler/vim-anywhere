@@ -62,6 +62,8 @@ $ gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding <custom
 
 *I3WM*
 
+Note that in i3, Alt is denoted Mod1: [i3 modifier keys](https://i3wm.org/docs/userguide.html#keybindings).
+
 This allows the use of $mod + Alt + v to open vim for editing:
 ```bash
 $ echo "bindsym $mod+Mod1+v exec ~/.vim-anywhere/bin/run" >> ~/.i3/config # remember to reload your config after
