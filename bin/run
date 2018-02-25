@@ -69,12 +69,12 @@ elif [[ $OSTYPE == "darwin"* ]]; then
   mvim_path=$(cat $AW_PATH/.path)
 
   require_file_exists $mvim_path \
-    "mvim must have been move or uninstalled.\nPlease make sure it is" \
+    "mvim must have been moved or uninstalled.\nPlease make sure it is" \
     "available in your path and then reinstall vim-anywhere."
 
   $mvim_path $VIM_OPTS $TMPFILE
   # todo, fix invalid file
-  
+
   # NOTE
   # Here we set LANG explicitly to be UTF-8 compatible when copying text. The only way that was explicitly
   # setting this to en_US.UTF-8. This may eventually cause issues with other languages. If so, just remove
