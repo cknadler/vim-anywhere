@@ -90,11 +90,13 @@ and paste it into whatever application I was just using. vim-anywhere attempts
 to automate this process as much as possible, reducing the friction of using
 Vim to do more than just edit code.
 
-## Contributing
+## [Contributing](CONTRIBUTING.md)
 
-Love vim-anywhere? Hate it? Want to change it completely? Email me or open an
-issue and lets talk. Pull requests, suggestions and issues of any kind are
-welcome with open arms.
+Love vim-anywhere? Hate it? Want to change it completely? Open an issue and lets
+talk. Pull requests, suggestions and issues of any kind are welcome. **Make sure
+to check out the [contribution guidelines](CONTRIBUTING.md) before you submit a
+pull request.**
+
 
 ## License
 
