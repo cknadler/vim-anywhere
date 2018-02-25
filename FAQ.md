@@ -1,4 +1,4 @@
-**vim-anywhere doesn't automatically paste after I close vim**
+## Text doesn't automatically paste after I close vim
 
 This is by design currently. The readme has a blurb about this at the top.
 
