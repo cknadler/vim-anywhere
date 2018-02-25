@@ -28,9 +28,6 @@ __Linux:__
 curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | bash
 ```
 
-__OSX caveat:__ key binding is unbound by default. See [keybinding](#keybinding)
-for details.
-
 #### Update
 
 ```bash
@@ -45,13 +42,13 @@ for details.
 
 ## Keybinding
 
-__OSX:__ ( default = unbound, suggested = `ctrl+cmd+v` )
+__OSX:__ ( default = ctrl+cmd+v` )
 
-The keyboard shortcut for invoking vim-anywhere is unbound by default on OSX.
-The installation script will automatically open
-`System Preferences > Keyboard > Shortcuts`. Fill in the following:
+You can adjust the shortcut via [system preferences](assets/shortcut.png).
 
-![keyboard shortcut](assets/shortcut.png)
+```
+System Preferences > Keyboard > Shortcuts > Services > Vim Anywhere
+```
 
 __Linux:__ ( default = `ctrl+alt+v` )
 
@@ -69,9 +66,9 @@ Adjust in case `$mod` is not set to ctrl.
 
 ## History
 
-vim-anywhere creates a temporary file in `/tmp/vim-anywhere` when
-invoked. These files stick around until you restart your system, giving you
-a temporary history.
+vim-anywhere creates a temporary file in `/tmp/vim-anywhere` when invoked. These
+files stick around until you restart your system, giving you a temporary
+history.
 
 View your history:
 
