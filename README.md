@@ -82,6 +82,32 @@ Reopen your most recent file:
 $ vim $( ls /tmp/vim-anywhere | sort -r | head -n 1 )
 ```
 
+To clean up your history (for systems that do not reboot often) you can run the `bin/prune` command (possibly from `cron`).
+
+Remove history older than seven days (default):
+
+```bash
+$ ~/.vim-anywhere/bin/prune
+```
+
+Remove history older then *one* day:
+
+```bash
+$ ~/.vim-anywhere/bin/prune -m +1
+```
+
+Remove **all** history:
+
+```bash
+$ ~/.vim-anywhere/bin/prune -a
+```
+
+To run this every day (at 2 AM) you can add this to your crontab:
+
+```crontab
+0 2 * * *  $HOME/.vim-anywhere/bin/prune
+```
+
 ## Why?
 
 I use Vim for _almost_ everything. I wish I didn't have to say _almost_. My
