@@ -36,8 +36,8 @@ done
 ###
 
 AW_PATH=$HOME/.vim-anywhere
-TMPFILE_DIR=/tmp/vim-anywhere
-TMPFILE=$TMPFILE_DIR/doc-$(date +"%y%m%d%H%M%S")
+TMPFILE_DIR="$(mktemp -d /tmp/vim-anywhere.XXX)"
+TMPFILE_TEMPLATE=doc-$(date +"%y%m%d%H%M%S").XXX
 VIM_OPTS=--nofork
 
 # Use ~/.gvimrc.min or ~/.vimrc.min if one exists
@@ -50,8 +50,14 @@ for vimrc_path in "${VIMRC_PATH[@]}"; do
     fi
 done
 
-mkdir -p $TMPFILE_DIR
-touch $TMPFILE
+TMPFILE="$(mktemp -p $TMPFILE_DIR -t $TMPFILE_TEMPLATE)"
+
+function remove_tmp_dir() {
+	rm -rf $TMPFILE_DIR
+}
+
+## Removes all temp files on exit and sigint
+trap "remove_tmp_dir" EXIT SIGINT
 
 # Linux
 if [[ $OSTYPE == "linux-gnu" ]]; then
