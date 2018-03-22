@@ -51,6 +51,7 @@ for vimrc_path in "${VIMRC_PATH[@]}"; do
     fi
 done
 
+xclip -selection clipboard -o > $TMPFILE
 
 # Linux
 if [[ $OSTYPE == "linux-gnu" ]]; then
