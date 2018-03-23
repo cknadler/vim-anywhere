@@ -82,3 +82,5 @@ elif [[ $OSTYPE == "darwin"* ]]; then
   LANG=en_US.UTF-8 pbcopy < $TMPFILE
   osascript -e "activate application \"$app\""
 fi
+
+rm $TMPFILE
