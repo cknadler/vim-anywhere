@@ -75,7 +75,7 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
   require_installed xclip
 
 # OSX specific checks
-elif [[ $OSTYPE == "darwin"* ]]; then
+elif [[ $OSTYPE =~ [Dd]+arwin[.]* ]]; then
   require_installed mvim 'Run `brew install macvim`.'
 
 # Unsupported OS
@@ -120,7 +120,7 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
   fi
 
 # OSX install
-elif [[ $OSTYPE == "darwin"* ]]; then
+elif [[ $OSTYPE =~ [Dd]+arwin[.]* ]]; then
   # store the absolute path to the mvim executable
   which mvim > $AW_PATH/.path
 

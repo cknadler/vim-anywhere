@@ -49,7 +49,7 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
   fi
 
 # OSX uninstall
-elif [[ $OSTYPE == "darwin"* ]]; then
+elif [[ $OSTYPE =~ [Dd]+arwin[.]* ]]; then
   rm -rf $HOME/Library/Services/VimAnywhere.workflow
 fi
 
