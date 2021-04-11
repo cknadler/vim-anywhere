@@ -15,7 +15,7 @@ refocused.
 
 __OSX:__
 
-- MacVim (`brew cask install macvim`)
+- MacVim (`brew install --cask macvim`)
 
 __Linux:__
 
