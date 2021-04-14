@@ -40,6 +40,19 @@ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | bash
 ~/.vim-anywhere/uninstall
 ```
 
+## Arguments
+
+By default, vim-anywhere will open a gvim session with minimal configuration. The below settings can be used to customize vim-anywhere's behavior.
+
+| Option          | Description                 |
+| --------------- |-----------------------------|
+| -v              | Enable verbose output       |
+| -t \<term\>     | Specify a terminal emulator instead of gvim |
+
+__OSX:__
+
+Currently the '-t' flag is not supported.
+
 ## Keybinding
 
 __OSX:__ ( default = `ctrl+cmd+v` )

@@ -24,10 +24,12 @@ require_file_exists() {
 # opts
 ###
 
-while getopts ":v" opt; do
+while getopts ":t:v" opt; do
   case "$opt" in
+    t) LAUNCH_TERM=$OPTARG ;;
     v) set -x ;;
     \?) echo "Invalid option: -$OPTARG" >&2 ;;
+    :) echo "Option -$OPTARG requires an argument" >&2 ;;
   esac
 done
 
@@ -56,11 +58,19 @@ touch $TMPFILE
 # Linux
 if [[ $OSTYPE == "linux-gnu" ]]; then
   chmod o-r $TMPFILE # Make file only readable by you
-  gvim $VIM_OPTS $TMPFILE
+  if [[ "" != "$LAUNCH_TERM" ]]; then
+	  $LAUNCH_TERM -e vim $VIM_OPTS $TMPFILE
+  else 
+	  gvim $VIM_OPTS $TMPFILE
+  fi
   cat $TMPFILE | xclip -selection clipboard
 
 # OSX
 elif [[ $OSTYPE == "darwin"* ]]; then
+  if [[ "" != "$LAUNCH_TERM" ]]; then
+	  echo "The -t option is not supported by OSX at this time"
+	  exit 1
+  fi
   # if there is no path file, it must have been deleted or the installer failed
   require_file_exists $AW_PATH/.path \
     "Please reinstall vim-anywhere."
