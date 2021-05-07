@@ -6,7 +6,7 @@
 #
 # Installs vim-anywhere. Intended for use via curl:
 #
-#   $ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | bash
+#   $ curl -fsSl https://raw.githubusercontent.com/cknadler/vim-anywhere/master/install | bash
 
 set -e
 
