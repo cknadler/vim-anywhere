@@ -61,6 +61,7 @@ $ gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding <custom
 
 ```bash
 $ echo 'bindsym $mod+Alt+v exec ~/.vim-anywhere/bin/run' >> ~/.i3/config # remember to reload your config after
+$ echo 'bindsym $mod+Alt+v exec ~/.vim-anywhere/bin/run' >> ~/.config/sway/config # remember to reload your config after
 ```
 Adjust in case `$mod` is not set to ctrl.
 
