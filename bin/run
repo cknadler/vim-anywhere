@@ -56,8 +56,11 @@ touch $TMPFILE
 # Linux
 if [[ $OSTYPE == "linux-gnu" ]]; then
   chmod o-r $TMPFILE # Make file only readable by you
-  gvim $VIM_OPTS $TMPFILE
-  cat $TMPFILE | xclip -selection clipboard
+  if gvim $VIM_OPTS $TMPFILE; then
+    cat $TMPFILE | xclip -selection clipboard
+  else
+    err "Vim aborted with a non-zero exit code."
+  fi
 
 # OSX
 elif [[ $OSTYPE == "darwin"* ]]; then
@@ -72,13 +75,16 @@ elif [[ $OSTYPE == "darwin"* ]]; then
     "mvim must have been moved or uninstalled.\nPlease make sure it is" \
     "available in your path and then reinstall vim-anywhere."
 
-  $mvim_path $VIM_OPTS $TMPFILE
   # todo, fix invalid file
+  if $mvim_path $VIM_OPTS $TMPFILE; then
+    # NOTE
+    # Here we set LANG explicitly to be UTF-8 compatible when copying text. The only way that was explicitly
+    # setting this to en_US.UTF-8. This may eventually cause issues with other languages. If so, just remove
+    # the LANG setting.
+    LANG=en_US.UTF-8 pbcopy < $TMPFILE
+  else
+    err "MacVim aborted with a non-zero exit code."
+  fi
 
-  # NOTE
-  # Here we set LANG explicitly to be UTF-8 compatible when copying text. The only way that was explicitly
-  # setting this to en_US.UTF-8. This may eventually cause issues with other languages. If so, just remove
-  # the LANG setting.
-  LANG=en_US.UTF-8 pbcopy < $TMPFILE
   osascript -e "activate application \"$app\""
 fi
