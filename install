@@ -72,7 +72,11 @@ fi
 if [[ $OSTYPE == "linux-gnu" ]]; then
   require_one_installed gconftool gsettings
   require_installed gvim
-  require_installed xclip
+  if [[ $WAYLAND_DISPLAY ]]; then
+    require_installed wl-copy
+  else
+    require_installed xclip
+  fi
 
 # OSX specific checks
 elif [[ $OSTYPE == "darwin"* ]]; then
