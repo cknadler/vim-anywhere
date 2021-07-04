@@ -37,7 +37,8 @@ done
 
 AW_PATH=$HOME/.vim-anywhere
 TMPFILE_DIR=/tmp/vim-anywhere
-TMPFILE=$TMPFILE_DIR/doc-$(date +"%y%m%d%H%M%S")
+mkdir -p $TMPFILE_DIR
+TMPFILE=`mktemp -p $TMPFILE_DIR`
 VIM_OPTS=--nofork
 
 # Use ~/.gvimrc.min or ~/.vimrc.min if one exists
@@ -50,12 +51,11 @@ for vimrc_path in "${VIMRC_PATH[@]}"; do
     fi
 done
 
-mkdir -p $TMPFILE_DIR
-touch $TMPFILE
+xclip -selection clipboard -o > $TMPFILE
 
 # Linux
 if [[ $OSTYPE == "linux-gnu" ]]; then
-  chmod o-r $TMPFILE # Make file only readable by you
+  chmod 600 $TMPFILE # Make file only readable by you
   gvim $VIM_OPTS $TMPFILE
   cat $TMPFILE | xclip -selection clipboard
 
@@ -82,3 +82,5 @@ elif [[ $OSTYPE == "darwin"* ]]; then
   LANG=en_US.UTF-8 pbcopy < $TMPFILE
   osascript -e "activate application \"$app\""
 fi
+
+rm $TMPFILE
