@@ -60,7 +60,7 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
   cat $TMPFILE | xclip -selection clipboard
 
 # OSX
-elif [[ $OSTYPE == "darwin"* ]]; then
+elif [[ $OSTYPE =~ [Dd]+arwin[.]* ]]; then
   # if there is no path file, it must have been deleted or the installer failed
   require_file_exists $AW_PATH/.path \
     "Please reinstall vim-anywhere."

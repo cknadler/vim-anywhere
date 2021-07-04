@@ -47,7 +47,7 @@ pushd $AW_PATH
 popd
 
 # OSX only
-if [[ $OSTYPE == "darwin"* ]]; then
+if [[ $OSTYPE =~ [Dd]+arwin[.]* ]]; then
   cp -R $AW_PATH/VimAnywhere.workflow $HOME/Library/Services
 fi
 
