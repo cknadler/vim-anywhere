@@ -24,9 +24,12 @@ require_file_exists() {
 # opts
 ###
 
-while getopts ":v" opt; do
+while getopts ":vc" opt; do
   case "$opt" in
     v) set -x ;;
+    c)
+      preprop_from_clipboard='true'
+      ;;
     \?) echo "Invalid option: -$OPTARG" >&2 ;;
   esac
 done
@@ -56,6 +59,10 @@ touch $TMPFILE
 # Linux
 if [[ $OSTYPE == "linux-gnu" ]]; then
   chmod o-r $TMPFILE # Make file only readable by you
+  if [ "${preprop_from_clipboard}" = 'true' ]; then
+    cont=$(xclip -selection clipboard -o)
+    xclip -selection clipboard -o > $TMPFILE
+  fi
   gvim $VIM_OPTS $TMPFILE
   cat $TMPFILE | xclip -selection clipboard
 
@@ -71,6 +78,10 @@ elif [[ $OSTYPE == "darwin"* ]]; then
   require_file_exists $mvim_path \
     "mvim must have been moved or uninstalled.\nPlease make sure it is" \
     "available in your path and then reinstall vim-anywhere."
+
+  if [ "${preprop_from_clipboard}" = 'true' ]; then
+    LANG=en_US.UTF-8 pbpaste > $TMPFILE
+  fi
 
   $mvim_path $VIM_OPTS $TMPFILE
   # todo, fix invalid file

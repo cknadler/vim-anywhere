@@ -40,6 +40,13 @@ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | bash
 ~/.vim-anywhere/uninstall
 ```
 
+## Options
+
+* `-v`
+  - Verbose. Echo of every command in the script.
+* `-c`
+  - Clipboard. Pre-populate Vim with the current clipboard contents.
+
 ## Keybinding
 
 __OSX:__ ( default = `ctrl+cmd+v` )
