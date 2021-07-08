@@ -37,7 +37,7 @@ done
 
 AW_PATH=$HOME/.vim-anywhere
 TMPFILE_DIR=/tmp/vim-anywhere
-TMPFILE=$TMPFILE_DIR/doc-$(date +"%y%m%d%H%M%S")
+TMPFILE=$TMPFILE_DIR/doc-$(date +"%y%m%d%H%M%S").md
 VIM_OPTS=--nofork
 
 # Use ~/.gvimrc.min or ~/.vimrc.min if one exists
