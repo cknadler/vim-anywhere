@@ -27,19 +27,19 @@ done
 
 err() { echo -e "$@" 1>&2; }
 
-check_installed() { hash $1 &> /dev/null; }
+check_installed() { hash "$1" &> /dev/null; }
 
 require_installed() {
-  if ! check_installed $1; then
+  if ! check_installed "$1"; then
     err "vim-anywhere requires $1 to function"
-    if [[ "$2" != "" ]]; then echo $2; fi
+    if [[ "$2" != "" ]]; then echo "$2"; fi
     exit 1
   fi
 }
 
 require_one_installed() {
-  for file in $*; do
-    check_installed $file && return
+  for file in "$@"; do
+    check_installed "$file" && return
   done
   err "vim-anywhere requires one of the following to be installed:\n$*"
   exit 1
@@ -54,9 +54,12 @@ AW_URL='https://github.com/cknadler/vim-anywhere'
 
 # Check if vim-anywhere is already installed. If so, remove the previous
 # installation.
-if [ -a $AW_PATH ]; then
-  echo 'Cleaning up previous installation...'
-  rm -rf $AW_PATH
+if [ -d "$AW_PATH" ]; then
+  read -r -p " do you want to reinstall vim vim-anywhere? "  yn
+  case $yn in 
+      [Yy]* )  rm -rf "$AW_PATH" ;;
+      [Nn]* ) exit ;;
+  esac 
   # TODO: It would be nice to have an option for user input here
   # Reinstall vim-anywhere (y/n)? ... or something like that
 fi
@@ -65,7 +68,7 @@ require_installed git
 
 # if we are in a git repo, unset env vars
 if git rev-parse --git-dir &> /dev/null; then
-  unset $(git rev-parse --local-env-vars) &> /dev/null
+  unset "$(git rev-parse --local-env-vars)" &> /dev/null
 fi
 
 # Linux specific checks
@@ -76,7 +79,7 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
 
 # OSX specific checks
 elif [[ $OSTYPE == "darwin"* ]]; then
-  require_installed mvim 'Run `brew install macvim`.'
+  require_installed mvim "Run \`brew install macvim\`."
 
 # Unsupported OS
 else
@@ -90,21 +93,21 @@ fi
 
 echo "Installing vim-anywhere..."
 
-git clone $AW_URL $AW_PATH
+git clone "$AW_URL" "$AW_PATH"
 
 # Linux install
 if [[ $OSTYPE == "linux-gnu" ]]; then
   name="vim-anywhere"
   binding="<CTRL><ALT>v"
-  action=$AW_PATH/bin/run
+  action="$AW_PATH"/bin/run
 
   # We always try gconftool first. It is deprecated so it won't be on newer
   # installs. If it's installed, we know we are on older versions of Gnome.
   if check_installed gconftool; then
     kbd_path=/desktop/gnome/keybindings/vim-anywhere
-    gconftool -t str --set $kbd_path/name $name
-    gconftool -t str --set $kbd_path/binding $binding
-    gconftool -t str --set $kbd_path/action $action
+    gconftool -t str --set "$kbd_path"/name "$name"
+    gconftool -t str --set "$kbd_path"/binding "$binding"
+    gconftool -t str --set "$kbd_path"/action "$action"
 
   # At this point, we know we are using dconf, the currently supported settings
   # manager. gsettings is the gnome client for dconf.
@@ -112,21 +115,21 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
     media_keys=org.gnome.settings-daemon.plugins.media-keys
     custom_kbd=org.gnome.settings-daemon.plugins.media-keys.custom-keybinding
     kbd_path=/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vim-anywhere/
-    new_bindings=`gsettings get $media_keys custom-keybindings | sed -e"s>'\]>','$kbd_path']>"| sed -e"s>@as \[\]>['$kbd_path']>"`
-    gsettings set $media_keys custom-keybindings "$new_bindings"
-    gsettings set $custom_kbd:$kbd_path name $name
-    gsettings set $custom_kbd:$kbd_path binding $binding
-    gsettings set $custom_kbd:$kbd_path command $action
+    new_bindings=$(gsettings get $media_keys custom-keybindings | sed -e"s>'\]>','$kbd_path']>"| sed -e"s>@as \[\]>['$kbd_path']>")
+    gsettings set "$media_keys" custom-keybindings "$new_bindings"
+    gsettings set "$custom_kbd":"$kbd_path" name "$name"
+    gsettings set "$custom_kbd":"$kbd_path" binding "$binding"
+    gsettings set "$custom_kbd":"$kbd_path" command "$action"
   fi
 
 # OSX install
-elif [[ $OSTYPE == "darwin"* ]]; then
+elif [[ "$OSTYPE" == "darwin"* ]]; then
   # store the absolute path to the mvim executable
-  which mvim > $AW_PATH/.path
+  which mvim > "$AW_PATH"/.path
 
   # install the workflow as a service
-  mkdir -p $HOME/Library/Services
-  cp -R $AW_PATH/VimAnywhere.workflow $HOME/Library/Services
+  mkdir -p "$HOME"/Library/Services
+  cp -R "$AW_PATH"/VimAnywhere.workflow "$HOME"/Library/Services
 
   # Set default keybindings
   defaults write pbs NSServicesStatus '{

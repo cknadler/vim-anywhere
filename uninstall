@@ -23,7 +23,7 @@ done
 # defs
 ###
 
-check_installed() { hash $1 &> /dev/null; }
+check_installed() { hash "$1" &> /dev/null; }
 
 AW_PATH=$HOME/.vim-anywhere
 DOC_PATH=/tmp/vim-anywhere
@@ -32,7 +32,7 @@ DOC_PATH=/tmp/vim-anywhere
 # uninstall
 ###
 
-rm -rf $AW_PATH $DOC_PATH
+rm -rf "$AW_PATH" "$DOC_PATH"
 
 # Linux uninstall
 if [[ $OSTYPE == "linux-gnu" ]]; then
@@ -50,7 +50,7 @@ if [[ $OSTYPE == "linux-gnu" ]]; then
 
 # OSX uninstall
 elif [[ $OSTYPE == "darwin"* ]]; then
-  rm -rf $HOME/Library/Services/VimAnywhere.workflow
+  rm -rf "$HOME"/Library/Services/VimAnywhere.workflow
 fi
 
 echo "vim-anywhere has been successfully uninstalled!"
