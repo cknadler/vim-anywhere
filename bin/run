@@ -79,6 +79,6 @@ elif [[ $OSTYPE == "darwin"* ]]; then
   # Here we set LANG explicitly to be UTF-8 compatible when copying text. The only way that was explicitly
   # setting this to en_US.UTF-8. This may eventually cause issues with other languages. If so, just remove
   # the LANG setting.
-  LANG=en_US.UTF-8 pbcopy < $TMPFILE
+  LANG=en_US.UTF-8 tr -d '\n' < $TMPFILE | pbcopy 
   osascript -e "activate application \"$app\""
 fi
