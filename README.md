@@ -1,5 +1,7 @@
 # vim-anywhere
 
+[![CI](https://github.com/cknadler/vim-anywhere/actions/workflows/ci.yml/badge.svg)](https://github.com/cknadler/vim-anywhere/actions/workflows/ci.yml)
+
 Sometimes, you edit text outside of Vim. These are sad times. Enter
 vim-anywhere!
 
@@ -13,7 +15,7 @@ refocused.
 
 #### Requirements
 
-__OSX:__
+__macOS:__
 
 - MacVim (`brew install --cask macvim`)
 
@@ -42,19 +44,19 @@ curl -fsSL https://raw.github.com/cknadler/vim-anywhere/master/install | bash
 
 ## Keybinding
 
-__OSX:__ ( default = `ctrl+cmd+v` )
+__macOS:__ ( default = `ctrl+cmd+v` )
 
-You can adjust the shortcut via [system preferences](assets/shortcut.png).
+You can adjust the shortcut via [System Settings](assets/shortcut.png).
 
 ```
-System Preferences > Keyboard > Shortcuts > Services > Vim Anywhere
+System Settings > Keyboard > Keyboard Shortcuts > Services > Vim Anywhere
 ```
 
 __Linux:__ ( default = `ctrl+alt+v` )
 
 *Gnome*
 ```bash
-$ gconftool -t str --set /desktop/gnome/keybindings/vim-anywhere/binding <custom binding>
+$ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/vim-anywhere/ binding '<Primary><Alt>v'
 ```
 
 *I3WM*
@@ -66,20 +68,20 @@ Adjust in case `$mod` is not set to ctrl.
 
 ## History
 
-vim-anywhere creates a temporary file in `/tmp/vim-anywhere` when invoked. These
-files stick around until you restart your system, giving you a temporary
-history.
+vim-anywhere creates a temporary file in `$TMPDIR/vim-anywhere` (macOS) or
+`/tmp/vim-anywhere` (Linux) when invoked. These files stick around until you
+restart your system, giving you a temporary history.
 
 View your history:
 
 ```bash
-$ ls /tmp/vim-anywhere
+$ ls ${TMPDIR:-/tmp}/vim-anywhere
 ```
 
 Reopen your most recent file:
 
 ```bash
-$ vim $( ls /tmp/vim-anywhere | sort -r | head -n 1 )
+$ vim $( ls ${TMPDIR:-/tmp}/vim-anywhere | sort -r | head -n 1 )
 ```
 
 ## Why?
