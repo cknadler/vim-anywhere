@@ -55,3 +55,17 @@ run_script() {
   run env HOME="$HOME" PATH="$ISOLATED_PATH" \
     bash -c "OSTYPE=$ostype; source \"$script\" 2>&1"
 }
+
+# Like run_script but with only FAKE_BIN in PATH. Use when the test needs a
+# specific tool to be absent and ISOLATED_PATH would expose it (e.g. on Ubuntu
+# /bin is a symlink to /usr/bin, so tools like gsettings and git are reachable
+# even with a restricted PATH). Safe because the scripts only need bash
+# builtins and FAKE_BIN stubs before they hit the expected failure point.
+run_script_minimal() {
+  local ostype="$1"
+  local script="$2"
+  # Use /bin/bash explicitly: with PATH=FAKE_BIN only, `env ... bash` can't
+  # find bash itself since it's not in FAKE_BIN.
+  run env HOME="$HOME" PATH="$FAKE_BIN" \
+    /bin/bash -c "OSTYPE=$ostype; source \"$script\" 2>&1"
+}
