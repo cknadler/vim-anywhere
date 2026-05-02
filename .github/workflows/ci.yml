@@ -23,9 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install bats
-        run: |
-          sudo apt-get update -q
-          sudo apt-get install -y bats
+      - uses: bats-core/bats-action@3.0.0
       - name: Run tests
         run: bats test/
