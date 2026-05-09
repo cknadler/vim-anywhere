@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# vim-anywhere-prune - Prune unused temprary files
+# Author: Chris Knadler
+# Homepage: https://www.github.com/cknadler/vim-anywhere
+#
+# Removes old temprary files
+
+###
+# defs
+###
+
+ALL=1
+mtime="+7"
+
+###
+# opts
+###
+
+while getopts ":am:v" opt; do
+  case "$opt" in
+    a) ALL=0 ;;
+    m) mtime="$OPTARG" ;;
+    v) set -x ;;
+    \?) echo "Invalid option: -$OPTARG" >&2 ;;
+  esac
+done
+
+###
+# run
+###
+
+TMPFILE_DIR=/tmp/vim-anywhere
+
+if [[ $ALL == 0 ]]; then
+  find $TMPFILE_DIR -type f -exec rm -f {} \;
+else
+  find $TMPFILE_DIR -type f -mtime "$mtime" -exec rm -f {} \;
+fi
